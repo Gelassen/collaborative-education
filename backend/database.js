@@ -2,11 +2,11 @@ var mysql = require('mysql')
 var config = require('./config')
 
 var config = {
-	host     : config.HOST,
+	host     : config.DATABASE_HOST,
 	user     : config.USER,
 	password : config.PWD,
-    database : config.DATABASE,
-    connectionLimit: '5'
+        database : config.DATABASE,
+        connectionLimit: '5'
 };
 
 var pool = mysql.createPool(config);

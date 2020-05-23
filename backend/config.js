@@ -1,6 +1,11 @@
-const HOST = '127.0.0.1'
-const WEBSERVICE_PORT = 3000
-const DATABASE_PORT = 3306
-const USER = 'root'
-const PWD = 'root'
-const DATABASE = 'db_collaborative_edu'
+let config = {
+  WEBSERVICE_HOST: '84.201.133.46',
+  WEBSERVICE_PORT:  3000,
+  DATABASE_HOST: '127.0.0.1',
+  DATABASE_PORT: 3306,
+  USER: 'gelassen',
+  PWD: 'password',
+  DATABASE: 'db_collaborative_edu'
+}
+
+module.exports = Object.freeze(config);
