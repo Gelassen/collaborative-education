@@ -1,0 +1,19 @@
+Category: 
+ - high level node 
+ - build short and descriptive 
+ - schema: [gain] [knowledge, skills, overview] [software engineering, wild nature surviving, etc] 
+ 
+ as an Author I create a set of courses to achieve a goal 
+ 
+ as a Member of community I offer an alternative data source of a course 
+ 
+ as a Member of community I increase the rate of the data source 
+ 
+ Implementation: 
+  - author course source and alternative source are presented on the same page, distinguished by label ('author', 'alternative'), sorted by rate 
+  - course source has comments sorted by rate as well, the aim of the comment is to provide additional information  (Does app really need it?)
+  - mechanics of feedback [a] to community [b] to author [c] to deveoper or open source community (promised and achieved, new ideas, how did it help community member, broken sources)
+ 
+ 
+  
+ 

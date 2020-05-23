@@ -1,0 +1,135 @@
+var pool = require('../database');
+var util = require('../utils/network')
+
+exports.getAll = function(req, res) {
+    return new Promise( (resolve) => {
+        pool.getConnection(function(err, connection) {
+            connection.query(
+                'SELECT * FROM course_source', 
+                function(error, rows, fields) {
+                    if (error != null) {
+                        resolve(JSON.stringify(util.getErrorMessage()))
+                    } else {
+                        resolve(JSON.stringify(util.getPayloadMessage(rows)))
+                    }
+            })
+            connection.release()
+        });
+    })
+}
+
+exports.getSpecific = function(req) {
+    return new Promise((resolve) => {
+        pool.getConnection(function(err, connection) {
+            console.log("req.param: " + pool.escape(req.params))
+            console.log("req.body: " + JSON.stringify(pool.escape(req.body)))
+            connection.query(
+                'SELECT * FROM course_source WHERE course_uid = ?;', 
+                [req.params.courseId], 
+                function(error, rows, fields) {
+                    if (error != null) {
+                        var response = util.getPayloadMessage({uid: -1, title: "", source: "", course_uid: "", users: ""})
+                        resolve(response)
+                    } else {
+                        var response = util.getPayloadMessage(rows)
+                        resolve(response)
+                    }
+                }
+            )
+            connection.release()
+        });
+    })
+}
+
+exports.mapper = function(rows) {
+    var result = []
+    for (var id = 0; id < rows.length; id++) {
+        var item = rows[id];
+        result.push(
+            {
+                source: { uid: item.uid, title: item.title, source: item.source, course_uid: item.course_uid, users: item.users },
+                metadata: {
+                    likes : { likesUid: item.likesUid, counter: item.counter, courseUid: item.courseUid, users: item.usersLiked }, 
+                    comments : []
+                }
+            })
+    }
+    return result; 
+}
+
+exports.getSpecificWithMeta = function(req) {
+    return new Promise((resolve) => {
+        pool.getConnection(function(err, connection) {
+            connection.query(
+                'SELECT uid, title, source, sources.course_uid, sources.users, likes_uid as likesUid, counter, likes.course_uid as courseUid, likes.users as usersLiked ' + 
+                'FROM course_source as sources ' + 
+                'LEFT JOIN likes as likes on sources.uid = likes.course_uid ' + 
+                'WHERE sources.course_uid = ?;',
+                [req.params.courseId],
+                function(error, rows, fields) {
+                    if (error != null) {
+                        console.log("Failed to query sources with meta", error)
+                        var response = util.getPayloadMessage(module.exports.mapper(rows))
+                        resolve(response)
+                    } else {
+                        var response = util.getPayloadMessage(module.exports.mapper(rows))
+                        console.log("Course source Response: " + JSON.stringify(response))
+                        resolve(response)
+                    }
+                }
+            )
+            connection.release()
+        })
+    })
+}
+
+exports.create = function(req) {
+    return new Promise((resolve) => {
+        pool.getConnection(function(err, connection) {
+            var body = req.body
+            console.log(JSON.stringify(body))
+            connection.query(
+                'INSERT INTO course_source SET title = ?, source = ?, course_uid = ?, users = ?;', 
+                [pool.escape(body.title), pool.escape(body.source), pool.escape(body.courseUid), JSON.stringify(body.users)], 
+                function(error, rows, fields) {
+                    if (error != null) {
+                        console.log(JSON.stringify(error))
+                        var response = {uid: -1, title: "", source: "", course_uid: "", users: []}
+                        resolve(response)
+                    } else {
+                        body.course_uid = body.courseUid
+                        body.uid = (rows.affectRows == 0)  ? -1 : rows.insertId
+                        var payload = []
+                        payload.push(body)
+                        var response = util.getPayloadMessage(module.exports.mapper(payload))
+                        response.code = 204
+                        response.status.payload.metadata = { likes: { likesUid: null, counter: null, courseUid: null, users: null }, comments: [], pdata: null }
+                        console.log("Course source insert reponse: " + JSON.stringify(response)) 
+                        resolve(response)
+                    }
+                }
+            )
+            connection.release()
+        });
+    })
+}
+
+exports.delete = function(req) {
+    return new Promise((resolve) => {
+        pool.getConnection(function(err, connection) {
+            console.log("exports.delete: " + pool.escape(req.params.id))
+            connection.query(
+                'DELETE FROM course_source WHERE course_uid = ?;', 
+                [req.params.id], 
+                function(err, rows, fields) {
+                    if (err != null) {
+                        resolve(JSON.stringify(util.getErrorMessage()))
+                    } else {
+                        resolve(JSON.stringify(util.getPayloadMessage((rows.affectRows == 0) ? "Data hasn't been deleted" : "Data has been deleted")))
+                    }
+                }
+            )
+            connection.release() 
+        });
+    })
+}

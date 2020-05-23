@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">CollaborativeEducation</string>
+
+    <string name="title_add_category">Category name</string>
+    <string name="hint_add_category">Enter category in form of [gain] [knowledge] in [subject]</string>
+
+    <string name="title_add_course">Course name</string>
+    <string name="hint_add_course">Enter course name</string>
+
+    <string name="title_datasource_name">Source name</string>
+    <string name="hint_datasource_name">Enter source name</string>
+
+    <string name="title_data_source">Data source</string>
+    <string name="hint_data_source">Enter URL or reference description</string>
+
+    <string name="action_add_new_category">Add new category</string>
+    <string name="action_add_new_course">Add new course</string>
+    <string name="action_add_new_source">Add new source</string>
+
+    <string name="label_author_origin">Author</string>
+    <string name="label_author_alternative">Alternative</string>
+
+    <integer name="com_vk_sdk_AppId">7415445</integer>
+    <string name="facebook_app_id">255051732291087</string>
+    <string name="fb_login_protocol_scheme">255051732291087</string>
+    <string name="url">http://192.168.1.5:3000/v1/</string>  <!-- dynamic -->
+
+</resources>
