@@ -9,3 +9,7 @@ exports.getPayloadMessage = function(payload) {
 exports.getErrorMessage = function() {
     return {code: 500, status: {message: "unsuccess"}}
 }
+
+exports.getErrorMessage = function(payload) {
+    return {code: 500, status: {message: "unsuccess", payload: payload}}
+}

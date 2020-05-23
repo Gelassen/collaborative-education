@@ -1,14 +1,6 @@
 var pool = require('../database');
 var util = require('../utils/network')
 
-exports.test = function(req, res) {
-    return pool.getConnection(function(err, connection) {
-        connection.query(
-            'SHOW COLUMNS FROM likes'
-        )
-    })
-}
-
 exports.getAll = function(req, res) {
     return new Promise( (resolve) => {
         pool.getConnection(function(err, connection) {

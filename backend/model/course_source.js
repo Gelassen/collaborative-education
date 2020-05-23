@@ -28,7 +28,7 @@ exports.getSpecific = function(req) {
                 [req.params.courseId], 
                 function(error, rows, fields) {
                     if (error != null) {
-                        var response = util.getPayloadMessage({uid: -1, title: "", source: "", course_uid: "", users: ""})
+                        var response = util.getErrorMessage({uid: -1, title: "", source: "", course_uid: "", users: ""})
                         resolve(response)
                     } else {
                         var response = util.getPayloadMessage(rows)
@@ -69,7 +69,7 @@ exports.getSpecificWithMeta = function(req) {
                 function(error, rows, fields) {
                     if (error != null) {
                         console.log("Failed to query sources with meta", error)
-                        var response = util.getPayloadMessage(module.exports.mapper(rows))
+                        var response = util.getErrorMessage(module.exports.mapper(rows))
                         resolve(response)
                     } else {
                         var response = util.getPayloadMessage(module.exports.mapper(rows))
@@ -94,7 +94,7 @@ exports.create = function(req) {
                 function(error, rows, fields) {
                     if (error != null) {
                         console.log(JSON.stringify(error))
-                        var response = {uid: -1, title: "", source: "", course_uid: "", users: []}
+                        var response = util.getErrorMessage({uid: -1, title: "", source: "", course_uid: "", users: []})
                         resolve(response)
                     } else {
                         body.course_uid = body.courseUid

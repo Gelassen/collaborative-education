@@ -11,30 +11,6 @@ var likes = require('./controllers/likes')
 const hostname = config.WEBSERVICE_HOST;
 const port = config.WEBSERVICE_PORT;
 
-var mysql = require('mysql')
-
-var mysql      = require('mysql');
-var connection = mysql.createConnection({
-  host     : config.DATABASE_HOST,
-  user     : config.USER, 
-  password : config.PWD,
-  database : config.DATABASE
-});
-
-connection.connect(function(err) {
-  if (err) {
-    console.error('error connecting: ' + err.stack);
-    return;
-  }
-
-  console.log('connected as id ' + connection.threadId);
-
-  connection.query('SELECT * FROM category', function(error, rows, fields) {
-    console.log('Error: ' + JSON.stringify(error));
-    console.log('Rows: ' + JSON.stringify(rows));
-  })
-});
-
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
@@ -88,10 +64,6 @@ app.post('/v1/source/create', function(req, res, next) {
 app.get('/v1/category/:id/course/:courseId/source/meta', function(req, res, next) {
     sources.specificWithMeta(req, res) 
 })
-
-// app.post('/v1/source/create', function(req, res, next) {
-    // sources.create(req, res)
-// })
 
 app.get('/v1/category/:id/course/:courseId/source/:sourceId/like', function(req, res, next) {
     sources.specific(req, res) 
