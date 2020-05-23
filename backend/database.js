@@ -1,10 +1,11 @@
 var mysql = require('mysql')
+var config = require('./config')
 
 var config = {
-	host     : 'localhost',
-	user     : 'root',
-	password : 'root',
-    database : 'db_collaborative_edu',
+	host     : config.HOST,
+	user     : config.USER,
+	password : config.PWD,
+    database : config.DATABASE,
     connectionLimit: '5'
 };
 

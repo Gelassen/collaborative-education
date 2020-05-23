@@ -1,5 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var config = require('./config')
 var app = express();
 
 var tasks = require('./controllers/category')
@@ -7,8 +8,8 @@ var courses = require('./controllers/course')
 var sources = require('./controllers/course-source')
 var likes = require('./controllers/likes')
 
-const hostname = '127.0.0.1';
-const port = 3000;
+const hostname = config.HOST;
+const port = config.WEBSERVICE_PORT;
 
 var mysql = require('mysql')
 
