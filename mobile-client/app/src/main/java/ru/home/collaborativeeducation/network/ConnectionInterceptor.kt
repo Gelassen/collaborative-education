@@ -3,7 +3,7 @@ package ru.rsprm.network
 import android.content.Context
 import okhttp3.Interceptor
 import okhttp3.Response
-import ru.home.collaborativeeducation.network.NoConnectivityException
+import ru.home.collaborativeeducation.network.exceptions.NoConnectivityException
 
 import java.io.IOException
 

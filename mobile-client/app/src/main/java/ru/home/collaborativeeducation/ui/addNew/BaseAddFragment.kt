@@ -16,8 +16,9 @@ import ru.home.collaborativeeducation.AppApplication
 import ru.home.collaborativeeducation.model.CourseSourceItem
 import ru.home.collaborativeeducation.network.model.Payload
 import ru.home.collaborativeeducation.repository.InternalStorageRepository
+import ru.home.collaborativeeducation.ui.IModelListener
 
-abstract class BaseAddFragment : Fragment() {
+abstract class BaseAddFragment : Fragment(), IModelListener {
 
     interface AddSourceListener {
         fun onSaveItem(item: Parcelable)
@@ -42,7 +43,7 @@ abstract class BaseAddFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(AddNewViewModel::class.java)
-        viewModel.init(activity!!.application as AppApplication)
+        viewModel.init(activity!!.application as AppApplication, this)
         viewModel.getModel().observe(this, Observer {
             when(it.status) {
                 AddNewViewModel.Status.OK -> onAddNewItemClick(it.payload) // TODO extend with data model
@@ -57,6 +58,11 @@ abstract class BaseAddFragment : Fragment() {
         cancel.setOnClickListener {
             onCancel()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.onDestroy()
     }
 
     fun setAddSourceListener(listener: AddSourceListener) {
@@ -76,5 +82,11 @@ abstract class BaseAddFragment : Fragment() {
 
     fun onFailedToAddNewItemClick() {
         Toast.makeText(context!!, "Can't to add new item. Contact admin", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onServerError() {
+        view!!.post {
+            Toast.makeText(context, "Something went wrong on backend. Please verify input data or try later", Toast.LENGTH_SHORT).show()
+        }
     }
 }

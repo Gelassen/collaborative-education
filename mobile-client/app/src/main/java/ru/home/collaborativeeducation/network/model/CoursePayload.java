@@ -10,6 +10,15 @@ public class CoursePayload implements Payload {
     @SerializedName("course_uid")
     private Long categoryUid;
 
+    public CoursePayload() {
+    }
+
+    public CoursePayload(Long uid, String title, Long categoryUid) {
+        this.uid = uid;
+        this.title = title;
+        this.categoryUid = categoryUid;
+    }
+
     public Long getUid() {
         return uid;
     }

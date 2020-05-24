@@ -23,6 +23,6 @@
     <integer name="com_vk_sdk_AppId">7415445</integer>
     <string name="facebook_app_id">255051732291087</string>
     <string name="fb_login_protocol_scheme">255051732291087</string>
-    <string name="url">http://192.168.1.5:3000/v1/</string>  <!-- dynamic -->
+    <string name="url">http://192.168.1.5:3000/v1/</string>  <!-- dynamic : 192.168.1.5 84.201.133.46-->
 
 </resources>

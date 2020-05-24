@@ -67,13 +67,18 @@ class CourseFragment : BaseListFragment<CourseViewModel, CourseAdapter>(),
             }
         })
 
-        viewModel.init(activity!!.application as AppApplication)
+        viewModel.init(activity!!.application as AppApplication, this)
         viewModel.getModel().observe(this, Observer() {
             val datasource: MutableList<CourseViewItem> = ArrayList()
             datasource.addAll(it)
             (list.adapter as CourseAdapter).update(datasource)
         })
         viewModel.onStart(category!!.uid!!)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.onStop()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

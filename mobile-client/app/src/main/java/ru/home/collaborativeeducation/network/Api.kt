@@ -20,10 +20,7 @@ interface Api {
     fun getAllCoursesForCategory(@Path("id") uid: String): Observable<ApiResponse<CoursePayload>>
 
     @POST("/v1/course/create")
-    fun create(@Body payload: CourseViewItem): Observable<ApiResponse<CoursePayload>>
-
-//    @get:GET("/v1/source")
-//    val getAllSourcesForCategory(@Query("category_uid") uid: String): Observable<ApiResponse<CourseSourcePayload>>
+    fun create(@Body payload: CoursePayload): Observable<ApiResponse<CoursePayload>>
 
     @GET("/v1/category/{id}/course/{courseId}/source")
     fun getAllSourcesForCourse(@Path("id") uid: String, @Path("courseId") courseId: String): Observable<ApiResponse<CourseSourcePayload>>

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.ListFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -17,8 +18,9 @@ import ru.home.collaborativeeducation.model.CourseViewItem
 import ru.home.collaborativeeducation.model.CourseWithMetadataAndComments
 import ru.home.collaborativeeducation.ui.addNew.AddNewActivity
 import ru.home.collaborativeeducation.ui.addNew.source.AddSourceFragment
+import ru.home.collaborativeeducation.ui.base.BaseListFragment
 
-class CourseDetailsFragment : Fragment(), CourseDetailsAdapter.ClickListener {
+class CourseDetailsFragment : BaseListFragment<CourseDetailsViewModel, CourseDetailsAdapter>(), CourseDetailsAdapter.ClickListener {
 
     val REQUEST_CODE = 1002
 
@@ -40,30 +42,27 @@ class CourseDetailsFragment : Fragment(), CourseDetailsAdapter.ClickListener {
 
     }
 
-    private lateinit var viewModel: CourseDetailsViewModel
-
     private lateinit var payloadCourse: CourseViewItem
+
+    override val viewModel: CourseDetailsViewModel
+        get() = ViewModelProviders.of(this).get(CourseDetailsViewModel::class.java)
+
+    override val adapter: CourseDetailsAdapter
+        get() = CourseDetailsAdapter()
+
+    override val getLayoutRes: Int
+        get() = R.layout.course_details_fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.course_details_fragment, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         payloadCourse = arguments!!.getParcelable<CourseViewItem>(PAYLOAD_COURSE)!!
 
-        list.layoutManager = LinearLayoutManager(context)
-        list.adapter = CourseDetailsAdapter()
         (list.adapter as CourseDetailsAdapter).setListener(this)
         (list.adapter as CourseDetailsAdapter).onInit(context!!)
 
@@ -71,8 +70,7 @@ class CourseDetailsFragment : Fragment(), CourseDetailsAdapter.ClickListener {
         divider.setDrawable(ContextCompat.getDrawable(context!!, R.drawable.bg_sources_divider)!!)
         list.addItemDecoration(divider)
 
-        viewModel = ViewModelProviders.of(this).get(CourseDetailsViewModel::class.java)
-        viewModel.init(activity!!.application as AppApplication)
+        viewModel.init(activity!!.application as AppApplication, this)
         viewModel.getModel().observe(this, Observer() {
             when(it.type) {
                 CourseDetailsViewModel.DataWrapper.TYPE_DATA -> (list.adapter as CourseDetailsAdapter).update(it.data)
@@ -80,6 +78,11 @@ class CourseDetailsFragment : Fragment(), CourseDetailsAdapter.ClickListener {
             }
         })
         viewModel.onStart(payloadCourse.categoryUid, payloadCourse.uid!!)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.onStop()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -113,4 +116,5 @@ class CourseDetailsFragment : Fragment(), CourseDetailsAdapter.ClickListener {
     override fun onLikeClick(item: CourseWithMetadataAndComments) {
         viewModel.onLike(item)
     }
+
 }

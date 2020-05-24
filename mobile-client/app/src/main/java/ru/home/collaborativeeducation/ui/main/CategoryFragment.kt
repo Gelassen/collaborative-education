@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.main_fragment.*
@@ -23,8 +24,6 @@ class CategoryFragment : BaseListFragment<MainViewModel, MainAdapter>(), MainAda
 
     companion object {
         fun newInstance() = CategoryFragment()
-
-        val TAG: String = CategoryFragment::class.java.name
     }
 
     override val viewModel: MainViewModel
@@ -52,7 +51,7 @@ class CategoryFragment : BaseListFragment<MainViewModel, MainAdapter>(), MainAda
             }
         })
 
-        viewModel.init(activity!!.application as AppApplication)
+        viewModel.init(activity!!.application as AppApplication, this)
         viewModel.getModel().observe(this, Observer() {
             val datasource: MutableList<CategoryViewItem> = ArrayList()
             datasource.addAll(it)
@@ -67,6 +66,11 @@ class CategoryFragment : BaseListFragment<MainViewModel, MainAdapter>(), MainAda
             (list.adapter as MainAdapter).addItem(data!!.getParcelableExtra<CategoryViewItem>(
                 AddSourceFragment.PAYLOAD)!!)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.onStop()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

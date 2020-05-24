@@ -2,6 +2,7 @@ package ru.home.collaborativeeducation.ui.course.details
 
 import androidx.lifecycle.*
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import ru.home.collaborativeeducation.AppApplication
 import ru.home.collaborativeeducation.model.CourseWithMetadataAndComments
@@ -9,6 +10,7 @@ import ru.home.collaborativeeducation.model.Likes
 import ru.home.collaborativeeducation.network.NetworkRepository
 import ru.home.collaborativeeducation.repository.InternalStorageRepository
 import ru.home.collaborativeeducation.storage.Cache
+import ru.home.collaborativeeducation.ui.IModelListener
 import javax.inject.Inject
 
 class CourseDetailsViewModel: ViewModel() {
@@ -19,13 +21,18 @@ class CourseDetailsViewModel: ViewModel() {
     @Inject
     lateinit var repo: InternalStorageRepository
 
+    private val disposable: CompositeDisposable = CompositeDisposable()
+
     private val data: MutableLiveData<DataWrapper> = MutableLiveData()
+
+    private var listener: IModelListener? = null
 
     private lateinit var cache: Cache
 
-    fun init(application: AppApplication) {
+    fun init(application: AppApplication, listener: IModelListener) {
         application.getComponent().inject(this)
         cache = Cache(application)
+        this.listener = listener
     }
 
     fun getModel(): LiveData<DataWrapper> {
@@ -33,23 +40,40 @@ class CourseDetailsViewModel: ViewModel() {
     }
 
     fun onStart(categoryUid: Long, courseUid: Long) {
-        service.getSourcesWithMetaForCourse(categoryUid.toString(), courseUid.toString())
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { it ->
-                this.data.postValue(DataWrapper(DataWrapper.TYPE_DATA, it))
-            }
+        disposable.add(
+            service.getSourcesWithMetaForCourse(categoryUid.toString(), courseUid.toString())
+                .doOnError { it ->
+                    if (listener != null) {
+                        listener!!.onServerError()
+                    }
+                }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { it ->
+                    this.data.postValue(DataWrapper(DataWrapper.TYPE_DATA, it))
+                }
+        )
+
     }
 
     fun onLike(item: CourseWithMetadataAndComments) {
-        service.saveLike(item)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { it ->
-//                this.data.postValue(it)
-                // TODO distinguish change callback on single item and a whole dataset
-                this.data.postValue(DataWrapper(DataWrapper.TYPE_UPDATE, it))
-            }
+        disposable.add(
+            service.saveLike(item)
+                .doOnError { it ->
+                    if (listener != null) {
+                        listener!!.onServerError()
+                    }
+                }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { it ->
+                    this.data.postValue(DataWrapper(DataWrapper.TYPE_UPDATE, it))
+                }
+        )
+    }
+
+    fun onStop() {
+        disposable.clear()
     }
 
     class DataWrapper {

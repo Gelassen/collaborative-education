@@ -5,7 +5,7 @@ import android.os.Parcelable
 
 class CourseSourceItem() : Parcelable {
 
-    var uid: Long? = 0
+    var uid: Long? = -1
     var title: String? = ""
     var source: String? = ""
     var courseUid: Long = 0L

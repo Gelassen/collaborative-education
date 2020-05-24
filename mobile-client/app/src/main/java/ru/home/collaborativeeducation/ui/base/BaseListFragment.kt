@@ -4,14 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.home.collaborativeeducation.R
+import ru.home.collaborativeeducation.ui.IModelListener
 
-abstract class BaseListFragment<M : ViewModel, A : RecyclerView.Adapter<*>>: Fragment() {
+abstract class BaseListFragment<M : ViewModel, A : RecyclerView.Adapter<*>>: Fragment(), IModelListener {
 
     protected abstract val viewModel: M
 
@@ -38,4 +40,11 @@ abstract class BaseListFragment<M : ViewModel, A : RecyclerView.Adapter<*>>: Fra
         list.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.HORIZONTAL))
         list.adapter = adapter
     }
+
+    override fun onServerError() {
+        list.post {
+            Toast.makeText(context, "Something went wrong on backend. Please try later", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 }

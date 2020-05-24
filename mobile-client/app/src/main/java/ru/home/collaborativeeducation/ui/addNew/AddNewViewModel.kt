@@ -1,16 +1,22 @@
 package ru.home.collaborativeeducation.ui.addNew
 
 import android.os.Parcelable
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import ru.home.collaborativeeducation.App
 import ru.home.collaborativeeducation.AppApplication
 import ru.home.collaborativeeducation.model.CategoryViewItem
 import ru.home.collaborativeeducation.model.CourseSourceItem
 import ru.home.collaborativeeducation.model.CourseViewItem
 import ru.home.collaborativeeducation.network.NetworkRepository
 import ru.home.collaborativeeducation.repository.InternalStorageRepository
+import ru.home.collaborativeeducation.ui.IModelListener
 import javax.inject.Inject
 
 class AddNewViewModel : ViewModel() {
@@ -40,10 +46,15 @@ class AddNewViewModel : ViewModel() {
     @Inject
     lateinit var repo: InternalStorageRepository
 
+    private var listener: IModelListener? = null
+
+    private val disposable: CompositeDisposable = CompositeDisposable()
+
     private val data: MutableLiveData<Status> = MutableLiveData()
 
-    fun init(app: AppApplication) {
+    fun init(app: AppApplication, listener: IModelListener) {
         app.getComponent().inject(this)
+        this.listener = listener
     }
 
     fun getModel(): MutableLiveData<Status> {
@@ -51,34 +62,58 @@ class AddNewViewModel : ViewModel() {
     }
 
     fun onSaveCategory(data: CategoryViewItem) {
-        service.saveCategoryViewItem(data)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                payload ->
-                this.data.postValue(Status(payload, if (payload.uid != -1L)  Status.OK else Status.FAILED))
-            }
+        disposable.add(
+            service.saveCategoryViewItem(data)
+                .doOnError { it ->
+                    if (listener != null) {
+                        listener!!.onServerError()
+                    }
+                }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                        payload ->
+                    this.data.postValue(Status(payload, if (payload.uid != -1L)  Status.OK else Status.FAILED))
+                }
+        )
     }
 
     fun onSaveCourse(data: CourseViewItem) {
-        service.saveCourseViewItem(data)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                payload ->
-                this.data.postValue(Status(payload, if (payload.uid != -1L)  Status.OK else Status.FAILED))
-            }
+        disposable.add(
+            service.saveCourseViewItem(data)
+                .doOnError { it ->
+                    if (listener != null) {
+                        listener!!.onServerError()
+                    }
+                }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                        payload ->
+                    this.data.postValue(Status(payload, if (payload.uid != -1L)  Status.OK else Status.FAILED))
+                }
+        )
     }
 
     fun onSaveSource(data: CourseSourceItem) {
-        data.users.add("Extra item to test array storage")
-        service.saveSourceForCourse(data)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                payload ->
-                this.data.postValue(Status(payload, if (payload.source.uid != -1L)  Status.OK else Status.FAILED))
-            }
+        disposable.add(
+            service.saveSourceForCourse(data)
+                .doOnError { it ->
+                    if (listener != null) {
+                        listener!!.onServerError()
+                    }
+                }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                        payload ->
+                    this.data.postValue(Status(payload, if (payload.source.uid != -1L)  Status.OK else Status.FAILED))
+                }
+        )
+    }
+
+    fun onDestroy() {
+        disposable.clear()
     }
 
 }
