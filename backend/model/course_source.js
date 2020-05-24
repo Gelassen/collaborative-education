@@ -21,14 +21,14 @@ exports.getAll = function(req, res) {
 exports.getSpecific = function(req) {
     return new Promise((resolve) => {
         pool.getConnection(function(err, connection) {
-            console.log("req.param: " + pool.escape(req.params))
-            console.log("req.body: " + JSON.stringify(pool.escape(req.body)))
             connection.query(
                 'SELECT * FROM course_source WHERE course_uid = ?;', 
                 [req.params.courseId], 
                 function(error, rows, fields) {
                     if (error != null) {
-                        var response = util.getErrorMessage({uid: -1, title: "", source: "", course_uid: "", users: ""})
+                        var payload = []
+                        payload.push({uid: -1, title: "", source: "", course_uid: req.params.courseId, users: []})
+                        var response = util.getErrorMessage(payload)
                         resolve(response)
                     } else {
                         var response = util.getPayloadMessage(rows)
@@ -94,7 +94,10 @@ exports.create = function(req) {
                 function(error, rows, fields) {
                     if (error != null) {
                         console.log(JSON.stringify(error))
-                        var response = util.getErrorMessage({uid: -1, title: "", source: "", course_uid: "", users: []})
+                        var emptyResponse = []
+                        emptyResponse.push({uid: -1, title: "", source: "", course_uid: body.courseUid, users: []})
+                        var response = util.getErrorMessage(module.exports.mapper(emptyResponse))
+                        response.status.payload.metadata = { likes: { likesUid: null, counter: null, courseUid: null, users: null }, comments: [], pdata: null }
                         resolve(response)
                     } else {
                         body.course_uid = body.courseUid
@@ -102,7 +105,6 @@ exports.create = function(req) {
                         var payload = []
                         payload.push(body)
                         var response = util.getPayloadMessage(module.exports.mapper(payload))
-                        // response.code = 204
                         response.status.payload.metadata = { likes: { likesUid: null, counter: null, courseUid: null, users: null }, comments: [], pdata: null }
                         console.log("Course source insert reponse: " + JSON.stringify(response)) 
                         resolve(response)
