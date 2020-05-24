@@ -50,7 +50,9 @@ exports.create = function(req) {
                 function(error, rows, fields) {
                     if (error != null) {
                         console.log(JSON.stringify(error))
-                        var response = util.getErrorMessage({uid: -1, title: "", course_uid: ""})
+                        var payload = []
+                        payload.push({uid: -1, title: "", course_uid: body.course_uid})
+                        var response = util.getErrorMessage(payload)
                         resolve(response)
                     } else {
                         body.uid = (rows.affectRows == 0)  ? -1 : rows.insertId
