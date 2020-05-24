@@ -102,7 +102,7 @@ exports.create = function(req) {
                         var payload = []
                         payload.push(body)
                         var response = util.getPayloadMessage(module.exports.mapper(payload))
-                        response.code = 204
+                        // response.code = 204
                         response.status.payload.metadata = { likes: { likesUid: null, counter: null, courseUid: null, users: null }, comments: [], pdata: null }
                         console.log("Course source insert reponse: " + JSON.stringify(response)) 
                         resolve(response)
