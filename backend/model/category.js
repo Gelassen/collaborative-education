@@ -44,7 +44,7 @@ exports.edit = function(req) {
             var body = req.body.params
             connection.query(
                 'UPDATE category SET title = ? WHERE uid = ?', 
-                [pool.escape(body.name), pool.escape(body.status), req.params.id], 
+                [body.title, req.params.id], 
                 function(error, rows, fields) {
                     if (error != null) {
                         resolve(JSON.stringify(util.getErrorMessage()))
@@ -65,7 +65,7 @@ exports.create = function(req) {
             var param = req.body.title;
             connection.query(
                 'INSERT INTO category SET title = ?', 
-                [pool.escape(param)], 
+                [param], 
                 function(error, rows, fields) {
                     if (error != null) {
                         console.log(JSON.stringify(error))

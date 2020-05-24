@@ -46,7 +46,7 @@ exports.create = function(req) {
             console.log("On likes " + JSON.stringify(body));
             connection.query(
                 'INSERT INTO likes SET counter = ?, course_uid = ?, users = ?;', 
-                [pool.escape(likes.counter), pool.escape(likes.courseUid), JSON.stringify(likes.users)], 
+                [likes.counter, likes.courseUid, likes.users], 
                 function(error, rows, fields) {
                     if (error != null) {
                         console.log("On likes error: " + error)

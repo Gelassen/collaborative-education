@@ -46,7 +46,7 @@ exports.create = function(req) {
             var body = req.body
             connection.query(
                 'INSERT INTO course SET title = ?, course_uid = ?;', 
-                [pool.escape(body.title), pool.escape(body.course_uid)], 
+                [body.title, body.course_uid], 
                 function(error, rows, fields) {
                     if (error != null) {
                         console.log(JSON.stringify(error))

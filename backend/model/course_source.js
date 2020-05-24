@@ -90,7 +90,7 @@ exports.create = function(req) {
             console.log(JSON.stringify(body))
             connection.query(
                 'INSERT INTO course_source SET title = ?, source = ?, course_uid = ?, users = ?;', 
-                [pool.escape(body.title), pool.escape(body.source), pool.escape(body.courseUid), JSON.stringify(body.users)], 
+                [body.title, body.source, body.courseUid, body.users], 
                 function(error, rows, fields) {
                     if (error != null) {
                         console.log(JSON.stringify(error))
