@@ -21,7 +21,7 @@ app.use(function(req, res, next) {
     next()
 })
 
-app.get('/', function(req, res, next) {
+app.get('/v1/', function(req, res, next) {
     res.send('Hello to collaborative education server!')
 })
 

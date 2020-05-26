@@ -49,7 +49,7 @@ exports.mapper = function(rows) {
             {
                 source: { uid: item.uid, title: item.title, source: item.source, course_uid: item.course_uid, users: item.users },
                 metadata: {
-                    likes : { likesUid: item.likesUid, counter: item.counter, courseUid: item.courseUid, users: item.usersLiked }, 
+                    likes : { likesUid: item.likesUid, counter: item.counter, courseUid: item.uid, users: item.usersLiked }, 
                     comments : []
                 }
             })
@@ -88,9 +88,10 @@ exports.create = function(req) {
         pool.getConnection(function(err, connection) {
             var body = req.body
             console.log(JSON.stringify(body))
+            console.log(JSON.stringify(body.users))
             connection.query(
                 'INSERT INTO course_source SET title = ?, source = ?, course_uid = ?, users = ?;', 
-                [body.title, body.source, body.courseUid, body.users], 
+                [body.title, body.source, body.courseUid, JSON.stringify(body.users)], 
                 function(error, rows, fields) {
                     if (error != null) {
                         console.log(JSON.stringify(error))
@@ -105,7 +106,6 @@ exports.create = function(req) {
                         var payload = []
                         payload.push(body)
                         var response = util.getPayloadMessage(module.exports.mapper(payload))
-                        response.status.payload.metadata = { likes: { likesUid: null, counter: null, courseUid: null, users: null }, comments: [], pdata: null }
                         console.log("Course source insert reponse: " + JSON.stringify(response)) 
                         resolve(response)
                     }
