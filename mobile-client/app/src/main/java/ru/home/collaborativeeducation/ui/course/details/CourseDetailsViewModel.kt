@@ -6,7 +6,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import ru.home.collaborativeeducation.AppApplication
 import ru.home.collaborativeeducation.model.CourseWithMetadataAndComments
-import ru.home.collaborativeeducation.model.Likes
 import ru.home.collaborativeeducation.network.NetworkRepository
 import ru.home.collaborativeeducation.repository.InternalStorageRepository
 import ru.home.collaborativeeducation.storage.Cache
@@ -53,7 +52,6 @@ class CourseDetailsViewModel: ViewModel() {
                     this.data.postValue(DataWrapper(DataWrapper.TYPE_DATA, it))
                 }
         )
-
     }
 
     fun onLike(item: CourseWithMetadataAndComments) {

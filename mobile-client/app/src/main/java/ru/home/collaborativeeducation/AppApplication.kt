@@ -2,6 +2,7 @@ package ru.home.collaborativeeducation
 
 import android.app.Application
 import android.util.Log
+import com.splunk.mint.Mint
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import ru.home.collaborativeeducation.di.AppComponent
@@ -16,6 +17,7 @@ import ru.home.collaborativeeducation.storage.Cache
 import ru.home.collaborativeeducation.storage.model.CommentsEntity
 import ru.home.collaborativeeducation.storage.model.LikesAndCommentsCrossRef
 import ru.home.collaborativeeducation.storage.model.LikesEntity
+import java.lang.RuntimeException
 import kotlin.collections.ArrayList
 
 class AppApplication : Application() {
@@ -27,8 +29,14 @@ class AppApplication : Application() {
 
         component = initDagger()
 
+        // Set the application environment
+        Mint.setApplicationEnvironment(Mint.appEnvironmentStaging);
+        Mint.initAndStartSession(this, "29b27c81")
+
         val cache = Cache(this)
-        cache.saveUuid()
+        if (cache.getUuid().equals("")) {
+            cache.saveUuid()
+        }
 
         val repo = InternalStorageRepository(this)
 

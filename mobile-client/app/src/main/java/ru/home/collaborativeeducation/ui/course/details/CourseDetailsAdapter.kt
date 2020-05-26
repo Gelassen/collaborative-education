@@ -112,6 +112,7 @@ class CourseDetailsAdapter : RecyclerView.Adapter<CourseDetailsAdapter.ViewHolde
     }
 
     private fun isThisUserMadeLike(likes: Likes): Boolean {
+        val testOnly = cache.getUuid()
         return likes.users!!.contains(cache.getUuid())
     }
 
