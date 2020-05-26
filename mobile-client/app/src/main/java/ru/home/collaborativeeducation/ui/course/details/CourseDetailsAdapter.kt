@@ -14,7 +14,7 @@ import ru.home.collaborativeeducation.storage.Cache
 class CourseDetailsAdapter : RecyclerView.Adapter<CourseDetailsAdapter.ViewHolder>() {
 
     interface ClickListener {
-        fun onItemClick(item: CourseSourceItem)
+        fun onItemClick(item: CourseWithMetadataAndComments)
         fun onLikeClick(item: CourseWithMetadataAndComments)
     }
 
@@ -72,7 +72,7 @@ class CourseDetailsAdapter : RecyclerView.Adapter<CourseDetailsAdapter.ViewHolde
         holder.itemView.setOnClickListener {
             if (clickListener == null) return@setOnClickListener
 
-            clickListener.onItemClick(data.source)
+            clickListener.onItemClick(data)
         }
         holder.likeCounter.setOnClickListener {
             updateModel(data.metadata.likes)

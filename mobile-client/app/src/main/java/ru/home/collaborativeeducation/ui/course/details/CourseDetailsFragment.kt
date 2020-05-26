@@ -1,16 +1,18 @@
 package ru.home.collaborativeeducation.ui.course.details
 
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
-import android.view.*
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.ListFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.main_fragment.*
 import ru.home.collaborativeeducation.AppApplication
 import ru.home.collaborativeeducation.R
 import ru.home.collaborativeeducation.model.CourseSourceItem
@@ -106,15 +108,35 @@ class CourseDetailsFragment : BaseListFragment<CourseDetailsViewModel, CourseDet
         return true
     }
 
-    override fun onItemClick(item: CourseSourceItem) {
+    override fun onItemClick(item: CourseWithMetadataAndComments) {
 /*        fragmentManager!!.beginTransaction()
             .replace(R.id.container, CourseFragment.newInstance(item))
             .addToBackStack(CourseFragment.TAG)
             .commit()*/
+
+
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(item.source.source)
+
+        if (intent.resolveActivity(activity!!.packageManager) != null) {
+            startActivity(intent)
+        } else {
+            Toast.makeText(context, "There is no activity to handle/show this url", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onLikeClick(item: CourseWithMetadataAndComments) {
         viewModel.onLike(item)
+    }
+
+    fun isIntentAvailable(context: Context, action: String?): Boolean {
+        val packageManager = context.packageManager
+        val intent = Intent(action)
+        val resolveInfo: List<*> = packageManager.queryIntentActivities(
+            intent,
+            PackageManager.MATCH_DEFAULT_ONLY
+        )
+        return resolveInfo.isNotEmpty()
     }
 
 }
