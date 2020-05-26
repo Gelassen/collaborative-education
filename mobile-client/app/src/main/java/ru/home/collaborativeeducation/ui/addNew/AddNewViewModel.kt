@@ -71,10 +71,14 @@ class AddNewViewModel : ViewModel() {
                 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                        payload ->
-                    this.data.postValue(Status(payload, if (payload.uid != -1L)  Status.OK else Status.FAILED))
-                }
+                .subscribe (
+                    {
+                            payload -> this.data.postValue(Status(payload, if (payload.uid != -1L)  Status.OK else Status.FAILED))
+                    },
+                    {
+                            it -> Log.e(App.TAG, "Error was thrown", it)
+                    }
+                )
         )
     }
 
@@ -88,10 +92,14 @@ class AddNewViewModel : ViewModel() {
                 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                        payload ->
-                    this.data.postValue(Status(payload, if (payload.uid != -1L)  Status.OK else Status.FAILED))
-                }
+                .subscribe (
+                    {
+                            payload -> this.data.postValue(Status(payload, if (payload.uid != -1L)  Status.OK else Status.FAILED))
+                    },
+                    {
+                            it -> Log.e(App.TAG, "Error was thrown", it)
+                    }
+                )
         )
     }
 
@@ -105,10 +113,15 @@ class AddNewViewModel : ViewModel() {
                 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                        payload ->
-                    this.data.postValue(Status(payload, if (payload.source.uid != -1L)  Status.OK else Status.FAILED))
-                }
+                .subscribe (
+                    {
+                            payload -> this.data.postValue(Status(payload, if (payload.source.uid != -1L)  Status.OK else Status.FAILED))
+                    },
+                    {
+                            it -> Log.e(App.TAG, "Error was thrown", it)
+                    }
+                )
+
         )
     }
 

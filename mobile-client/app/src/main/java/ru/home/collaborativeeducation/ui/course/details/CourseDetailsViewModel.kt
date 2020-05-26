@@ -1,9 +1,11 @@
 package ru.home.collaborativeeducation.ui.course.details
 
+import android.util.Log
 import androidx.lifecycle.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import ru.home.collaborativeeducation.App
 import ru.home.collaborativeeducation.AppApplication
 import ru.home.collaborativeeducation.model.CourseWithMetadataAndComments
 import ru.home.collaborativeeducation.network.NetworkRepository
@@ -48,9 +50,14 @@ class CourseDetailsViewModel: ViewModel() {
                 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { it ->
-                    this.data.postValue(DataWrapper(DataWrapper.TYPE_DATA, it))
-                }
+                .subscribe(
+                    {
+                            it -> this.data.postValue(DataWrapper(DataWrapper.TYPE_DATA, it))
+                    },
+                    {
+                            it -> Log.e(App.TAG, "Error was thrown", it)
+                    }
+                )
         )
     }
 
@@ -64,9 +71,14 @@ class CourseDetailsViewModel: ViewModel() {
                 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { it ->
-                    this.data.postValue(DataWrapper(DataWrapper.TYPE_UPDATE, it))
-                }
+                .subscribe(
+                    {
+                            it -> this.data.postValue(DataWrapper(DataWrapper.TYPE_UPDATE, it))
+                    },
+                    {
+                            it -> Log.e(App.TAG, "Error was thrown", it)
+                    }
+                )
         )
     }
 
