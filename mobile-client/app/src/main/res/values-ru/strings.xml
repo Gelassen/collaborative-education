@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Совместное образование</string>
+
+    <string name="title_add_category">Категория</string>
+    <string name="hint_add_category">Введите катеогрию в форме [получить] [знания/навыки/обзор] в [предмете]</string>
+
+    <string name="title_add_course">Курс</string>
+    <string name="hint_add_course">Введите курс</string>
+
+    <string name="title_datasource_name">Сыылка на курс</string>
+    <string name="hint_datasource_name">Введите имя ссылки</string>
+
+    <string name="title_data_source">Ссылка на курс</string>
+    <string name="hint_data_source">Введите ссылку(URL) на курс</string>
+
+    <string name="action_add_new_category">Добавить новую категорию</string>
+    <string name="action_add_new_course">Добавить новый курс</string>
+    <string name="action_add_new_source">Добавить новую ссылку</string>
+
+    <string name="label_author_origin">Автор</string>
+    <string name="label_author_alternative">Альтернатива</string>
+
+    <!-- App consts -->
+    <string name="click_comments_placeholder">Комментарии. Будет доступно в будущем</string>
+    <string name="click_add_source_bad_url">Это неверная ссылка. Вы ввели его в формате https://host_name:port/URI?</string>
+    <string name="click_open_source_no_activity">Здесь нет приложения обработать этот url</string>
+    <string name="error_server_side">Что-то пошло не так на сервере. Попробуёте позже.</string>
+    <string name="error_vk_login">Проблема со входом через VK. Продолжите без регистрации.</string>
+
+    <string name="hint_search">Нажмите для поиска</string>
+    <string name="text_vk_login">Вход через Вконтакте</string>
+    <string name="text_anon_login">Продолжите без авторизации</string>
+    <string name="text_save">Сохранить</string>
+    <string name="text_cancel">Отмена</string>
+
+</resources>

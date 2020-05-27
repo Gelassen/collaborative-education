@@ -1,6 +1,5 @@
 package ru.home.collaborativeeducation.ui.base
 
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.appcompat.app.ActionBar

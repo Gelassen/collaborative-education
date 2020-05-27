@@ -62,8 +62,6 @@ class CourseDetailsAdapter : RecyclerView.Adapter<CourseDetailsAdapter.ViewHolde
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = model.get(position)
-//        val item = data.source
-//        val likes = data.metadata.likes
         holder.title.text = data.source.title
         holder.desc.text = data.source.source
         holder.commentsCounter.setText(data.metadata.comments.size.toString())
@@ -82,7 +80,11 @@ class CourseDetailsAdapter : RecyclerView.Adapter<CourseDetailsAdapter.ViewHolde
             clickListener.onLikeClick(data)
         }
         holder.commentsCounter.setOnClickListener {
-            Toast.makeText(holder.itemView.context, "Comments click", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                holder.itemView.context,
+                it.context.getString(R.string.click_comments_placeholder),
+                Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
@@ -112,7 +114,6 @@ class CourseDetailsAdapter : RecyclerView.Adapter<CourseDetailsAdapter.ViewHolde
     }
 
     private fun isThisUserMadeLike(likes: Likes): Boolean {
-        val testOnly = cache.getUuid()
         return likes.users!!.contains(cache.getUuid())
     }
 

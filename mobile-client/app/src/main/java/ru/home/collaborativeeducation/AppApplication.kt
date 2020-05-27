@@ -31,7 +31,7 @@ class AppApplication : Application() {
 
         // Set the application environment
         Mint.setApplicationEnvironment(Mint.appEnvironmentStaging);
-        Mint.initAndStartSession(this, "29b27c81")
+        Mint.initAndStartSession(this, getString(R.string.splunk_key))
 
         val cache = Cache(this)
         if (cache.getUuid().equals("")) {

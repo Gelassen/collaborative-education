@@ -43,7 +43,7 @@ abstract class BaseListFragment<M : ViewModel, A : RecyclerView.Adapter<*>>: Fra
 
     override fun onServerError() {
         list.post {
-            Toast.makeText(context, "Something went wrong on backend. Please try later", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, getString(R.string.error_server_side), Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -38,11 +38,9 @@ class MainViewModel: ViewModel() {
     }
 
     fun onStart() {
-        Log.d(App.TAG, "[onStart] category view model")
         disposables.add(
             service.getCategoryViewItems()
                 .doOnError { it ->
-                    Log.d(App.TAG, "Seems something went wrong on backend", it)
                     if (listener != null) {
                         listener!!.onServerError()
                     }

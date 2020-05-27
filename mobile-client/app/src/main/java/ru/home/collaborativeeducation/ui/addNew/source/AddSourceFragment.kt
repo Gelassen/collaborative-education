@@ -42,7 +42,7 @@ class AddSourceFragment : BaseAddFragment() {
         if (URLUtil.isValidUrl(datasourceInput.text.toString())) {
             viewModel.onSaveSource(selectedItem as CourseSourceItem)
         } else {
-            Toast.makeText(context, "This is not valid url. Did you input it in format https://host_name:port/URI?", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, getString(R.string.click_add_source_bad_url), Toast.LENGTH_SHORT).show()
         }
     }
 

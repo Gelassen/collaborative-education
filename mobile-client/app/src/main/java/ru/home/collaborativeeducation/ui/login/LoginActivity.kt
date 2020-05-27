@@ -42,7 +42,7 @@ class LoginActivity : BaseActivity() {
             }
 
             override fun onLoginFailed(errorCode: Int) {
-                Toast.makeText(this@LoginActivity, "Failed to login into VK", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginActivity, getString(R.string.error_vk_login), Toast.LENGTH_SHORT).show()
             }
         }
         if (data == null || !VK.onActivityResult(requestCode, resultCode, data, callback)) {

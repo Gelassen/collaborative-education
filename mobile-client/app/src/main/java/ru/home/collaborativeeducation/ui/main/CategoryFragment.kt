@@ -64,7 +64,6 @@ class CategoryFragment : BaseListFragment<MainViewModel, MainAdapter>(), MainAda
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Log.d(App.NEW_ITEM, "resultCode&requestCode: " + resultCode + " " + requestCode)
         if (resultCode == -1 && requestCode == REQUEST_CODE) {
             (list.adapter as MainAdapter).addItem(data!!.getParcelableExtra<CategoryViewItem>(
                 AddSourceFragment.PAYLOAD)!!)

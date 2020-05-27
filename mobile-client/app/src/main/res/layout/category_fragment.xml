@@ -16,7 +16,7 @@
         android:textColor="@color/colorAccent"
         android:textColorHint="@color/colorAccent"
         android:backgroundTint="@color/colorAccent"
-        android:hint="Type to search"
+        android:hint="@string/hint_search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

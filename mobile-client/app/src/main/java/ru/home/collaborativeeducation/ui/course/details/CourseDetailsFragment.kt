@@ -1,14 +1,11 @@
 package ru.home.collaborativeeducation.ui.course.details
 
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.webkit.URLUtil
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -16,7 +13,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import ru.home.collaborativeeducation.AppApplication
 import ru.home.collaborativeeducation.R
-import ru.home.collaborativeeducation.model.CourseSourceItem
 import ru.home.collaborativeeducation.model.CourseViewItem
 import ru.home.collaborativeeducation.model.CourseWithMetadataAndComments
 import ru.home.collaborativeeducation.ui.addNew.AddNewActivity
@@ -116,7 +112,7 @@ class CourseDetailsFragment : BaseListFragment<CourseDetailsViewModel, CourseDet
         if (intent.resolveActivity(activity!!.packageManager) != null) {
             startActivity(intent)
         } else {
-            Toast.makeText(context, "There is no activity to handle/show this url", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, getString(R.string.click_open_source_no_activity), Toast.LENGTH_SHORT).show()
         }
     }
 

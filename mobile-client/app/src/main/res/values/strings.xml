@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">CollaborativeEducation</string>
 
+    <!-- Layouts -->
     <string name="title_add_category">Category name</string>
     <string name="hint_add_category">Enter category in form of [gain] [knowledge] in [subject]</string>
 
@@ -20,9 +21,17 @@
     <string name="label_author_origin">Author</string>
     <string name="label_author_alternative">Alternative</string>
 
-    <integer name="com_vk_sdk_AppId">7415445</integer>
-    <string name="facebook_app_id">255051732291087</string>
-    <string name="fb_login_protocol_scheme">255051732291087</string>
-    <string name="url">http://192.168.1.5:3000/v1/</string>  <!-- dynamic : 192.168.1.5 84.201.133.46-->
+    <string name="hint_search">Type to search</string>
+    <string name="text_vk_login">Vkontakte login</string>
+    <string name="text_anon_login">Continue without auth</string>
+    <string name="text_save">Save</string>
+    <string name="text_cancel">Cancel</string>
+
+    <!-- App consts -->
+    <string name="click_comments_placeholder">Comments click. Upcoming feature</string>
+    <string name="click_add_source_bad_url">This is not valid url. Did you input it in format https://host_name:port/URI?</string>
+    <string name="click_open_source_no_activity">There is no activity to handle/show this url</string>
+    <string name="error_server_side">Something went wrong on backend. Please try later</string>
+    <string name="error_vk_login">Failed to login into VK</string>
 
 </resources>
