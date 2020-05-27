@@ -2,6 +2,8 @@ package ru.home.collaborativeeducation.ui.addNew.source
 
 import android.os.Bundle
 import android.view.View
+import android.webkit.URLUtil
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.add_new_datasource_fragment.*
 import ru.home.collaborativeeducation.R
@@ -37,7 +39,11 @@ class AddSourceFragment : BaseAddFragment() {
             arguments!!.getParcelable<CourseViewItem>(PAYLOAD)!!.uid!!,
             arrayListOf<String>(Cache(context!!).getUuid()))
 
-        viewModel.onSaveSource(selectedItem as CourseSourceItem)
+        if (URLUtil.isValidUrl(datasourceInput.text.toString())) {
+            viewModel.onSaveSource(selectedItem as CourseSourceItem)
+        } else {
+            Toast.makeText(context, "This is not valid url. Did you input it in format https://host_name:port/URI?", Toast.LENGTH_SHORT).show()
+        }
     }
 
 }

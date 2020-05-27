@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.webkit.URLUtil
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -109,12 +110,6 @@ class CourseDetailsFragment : BaseListFragment<CourseDetailsViewModel, CourseDet
     }
 
     override fun onItemClick(item: CourseWithMetadataAndComments) {
-/*        fragmentManager!!.beginTransaction()
-            .replace(R.id.container, CourseFragment.newInstance(item))
-            .addToBackStack(CourseFragment.TAG)
-            .commit()*/
-
-
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(item.source.source)
 
