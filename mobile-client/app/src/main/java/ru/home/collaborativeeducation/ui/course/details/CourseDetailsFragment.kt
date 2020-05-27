@@ -129,14 +129,4 @@ class CourseDetailsFragment : BaseListFragment<CourseDetailsViewModel, CourseDet
         viewModel.onLike(item)
     }
 
-    fun isIntentAvailable(context: Context, action: String?): Boolean {
-        val packageManager = context.packageManager
-        val intent = Intent(action)
-        val resolveInfo: List<*> = packageManager.queryIntentActivities(
-            intent,
-            PackageManager.MATCH_DEFAULT_ONLY
-        )
-        return resolveInfo.isNotEmpty()
-    }
-
 }

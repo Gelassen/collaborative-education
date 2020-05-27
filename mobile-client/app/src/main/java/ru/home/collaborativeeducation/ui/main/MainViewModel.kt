@@ -38,6 +38,7 @@ class MainViewModel: ViewModel() {
     }
 
     fun onStart() {
+        Log.d(App.TAG, "[onStart] category view model")
         disposables.add(
             service.getCategoryViewItems()
                 .doOnError { it ->

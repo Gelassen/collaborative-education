@@ -2,6 +2,7 @@ package ru.home.collaborativeeducation.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -9,6 +10,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.main_fragment.*
+import ru.home.collaborativeeducation.App
 import ru.home.collaborativeeducation.AppApplication
 import ru.home.collaborativeeducation.R
 import ru.home.collaborativeeducation.model.CategoryViewItem
@@ -62,6 +64,7 @@ class CategoryFragment : BaseListFragment<MainViewModel, MainAdapter>(), MainAda
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        Log.d(App.NEW_ITEM, "resultCode&requestCode: " + resultCode + " " + requestCode)
         if (resultCode == -1 && requestCode == REQUEST_CODE) {
             (list.adapter as MainAdapter).addItem(data!!.getParcelableExtra<CategoryViewItem>(
                 AddSourceFragment.PAYLOAD)!!)

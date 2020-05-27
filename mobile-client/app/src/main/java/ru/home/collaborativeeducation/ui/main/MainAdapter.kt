@@ -1,5 +1,6 @@
 package ru.home.collaborativeeducation.ui.main
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +8,7 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import ru.home.collaborativeeducation.App
 import ru.home.collaborativeeducation.R
 import ru.home.collaborativeeducation.model.CategoryViewItem
 
@@ -28,10 +30,12 @@ class MainAdapter :
 
     fun addItem(data: CategoryViewItem) {
         datasource.add(data)
+        notifyItemInserted(datasource.size - 1)
     }
 
     fun update(datasource: MutableList<CategoryViewItem>) {
         this.datasource.clear()
+        this.fullSource.clear()
         this.datasource.addAll(datasource)
         this.fullSource.addAll(datasource)
         notifyDataSetChanged()

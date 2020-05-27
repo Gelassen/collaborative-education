@@ -1,5 +1,6 @@
 package ru.home.collaborativeeducation.ui.course
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +8,7 @@ import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import ru.home.collaborativeeducation.App
 import ru.home.collaborativeeducation.R
 import ru.home.collaborativeeducation.model.CourseViewItem
 
@@ -22,8 +24,14 @@ class CourseAdapter :
     private val fullSource: MutableList<CourseViewItem> = ArrayList()
     private val datasource: MutableList<CourseViewItem> = ArrayList()
 
+    fun addItem(data: CourseViewItem) {
+        datasource.add(data)
+        notifyItemInserted(datasource.size - 1)
+    }
+
     fun update(datasource: MutableList<CourseViewItem>) {
         this.datasource.clear()
+        this.fullSource.clear()
         this.datasource.addAll(datasource)
         this.fullSource.addAll(datasource)
         notifyDataSetChanged()
@@ -92,8 +100,4 @@ class CourseAdapter :
         }
     }
 
-    fun addItem(data: CourseViewItem) {
-        datasource.add(data)
-        notifyDataSetChanged()
-    }
 }
