@@ -31,6 +31,7 @@ class AddCourseFragment : BaseAddFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         categoryNameInput.hint = getString(R.string.hint_add_course)
+        hint.text = getString(R.string.hint_add_course)
     }
 
     override fun onSave() {
