@@ -9,7 +9,7 @@ public class CourseSourcePayload implements Payload, Serializable {
     private String title;
     private String source;
     private Long courseUid;
-    private ArrayList<String> users;
+    private String author;
 
     public Long getUid() {
         return uid;
@@ -43,22 +43,11 @@ public class CourseSourcePayload implements Payload, Serializable {
         this.courseUid = courseUid;
     }
 
-    public ArrayList<String> getUsers() {
-        return users;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setUsers(ArrayList<String> users) {
-        this.users = users;
-    }
-
-    @Override
-    public String toString() {
-        return "CourseSourcePayload{" +
-                "uid=" + uid +
-                ", title='" + title + '\'' +
-                ", source='" + source + '\'' +
-                ", courseUid=" + courseUid +
-                ", users=" + users +
-                '}';
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

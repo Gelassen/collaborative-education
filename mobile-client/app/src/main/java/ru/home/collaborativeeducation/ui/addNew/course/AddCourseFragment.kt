@@ -2,12 +2,12 @@ package ru.home.collaborativeeducation.ui.addNew.course
 
 import android.os.Bundle
 import android.view.View
-import kotlinx.android.synthetic.main.add_new_datasource_fragment.*
 import kotlinx.android.synthetic.main.add_new_item_fragment.*
 import kotlinx.android.synthetic.main.add_new_item_fragment.categoryNameInput
 import ru.home.collaborativeeducation.R
 import ru.home.collaborativeeducation.model.CategoryViewItem
 import ru.home.collaborativeeducation.model.CourseViewItem
+import ru.home.collaborativeeducation.storage.Cache
 import ru.home.collaborativeeducation.ui.addNew.BaseAddFragment
 
 class AddCourseFragment : BaseAddFragment() {
@@ -38,7 +38,8 @@ class AddCourseFragment : BaseAddFragment() {
         selectedItem = CourseViewItem(
             0,
             categoryNameInput.text.toString(),
-            arguments!!.getParcelable<CategoryViewItem>(PAYLOAD)!!.uid!!)
+            arguments!!.getParcelable<CategoryViewItem>(PAYLOAD)!!.uid!!,
+            Cache(context!!).getUuid())
 
         viewModel.onSaveCourse(selectedItem as CourseViewItem)
     }

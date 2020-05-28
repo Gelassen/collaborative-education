@@ -31,7 +31,7 @@ class CourseWithMetaConverter: IConverter<CourseWithMetadataAndCommentsEntity, C
             source.title,
             source.source,
             source.courseId,
-            source.users!!
+            source.author
         )
     }
 

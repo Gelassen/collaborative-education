@@ -2,14 +2,12 @@ package ru.home.collaborativeeducation.ui.course
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.main_fragment.*
-import ru.home.collaborativeeducation.App
 import ru.home.collaborativeeducation.AppApplication
 import ru.home.collaborativeeducation.R
 import ru.home.collaborativeeducation.model.CategoryViewItem

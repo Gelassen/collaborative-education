@@ -9,15 +9,15 @@ class CourseSourceItem() : Parcelable {
     var title: String? = ""
     var source: String? = ""
     var courseUid: Long = 0L
-    var users: ArrayList<String> = arrayListOf()
+    var author: String = ""
 
     constructor(uid: Long, title: String?, source: String?,
-                courseUid: Long, users: ArrayList<String>) : this() {
+                courseUid: Long, author: String) : this() {
         this.uid = uid
         this.title = title
         this.source = source
         this.courseUid = courseUid
-        this.users = users
+        this.author = author
     }
 
     constructor(parcel: Parcel) : this() {
@@ -25,8 +25,7 @@ class CourseSourceItem() : Parcelable {
         title = parcel.readString()
         source = parcel.readString()
         courseUid = parcel.readLong()
-        users = arrayListOf<String>()
-        parcel.readStringList(users)
+        author = parcel.readString()!!
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -34,7 +33,7 @@ class CourseSourceItem() : Parcelable {
         parcel.writeString(title)
         parcel.writeString(source)
         parcel.writeLong(courseUid)
-        parcel.writeStringList(users)
+        parcel.writeString(author)
     }
 
     override fun describeContents(): Int {

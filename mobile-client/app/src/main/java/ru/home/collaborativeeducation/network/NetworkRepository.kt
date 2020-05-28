@@ -9,6 +9,8 @@ import ru.home.collaborativeeducation.network.model.CoursePayload
 import ru.home.collaborativeeducation.storage.model.CourseWithMetadataAndCommentsEntity
 import ru.home.collaborativeeducation.storage.model.ItemMetadataEntity
 import ru.home.collaborativeeducation.storage.model.LikesEntity
+import java.util.*
+import kotlin.collections.ArrayList
 
 class NetworkRepository(val api: Api) {
 
@@ -50,7 +52,7 @@ class NetworkRepository(val api: Api) {
                     // no op
                 } else {
                     for (item in it.status.payload) {
-                        val obj = CourseViewItem(item.uid, item.title, item.categoryUid)
+                        val obj = CourseViewItem(item.uid, item.title, item.categoryUid, item.author)
                         result.add(obj)
                     }
                 }
@@ -64,15 +66,16 @@ class NetworkRepository(val api: Api) {
             .flatMap {  it ->
                 lateinit var response: CourseViewItem
                 if (it.code != 200) {
-                    response = CourseViewItem(-1, "", -1)
+                    response = CourseViewItem(-1, "", -1, "")
                 } else {
                     val item = it.status.payload[0]
-                    response = CourseViewItem(item.uid, item.title, item.categoryUid)
+                    response = CourseViewItem(item.uid, item.title, item.categoryUid, item.author)
                 }
                 Observable.just(response)
             }
     }
 
+    @Deprecated("Redundant")
     fun getSourcesForCourse(categoryUid: String, courseUid: String): Observable<List<CourseWithMetadataAndComments>> {
         return api.getAllSourcesForCourse(categoryUid, courseUid)
             .flatMap { it ->
@@ -82,7 +85,7 @@ class NetworkRepository(val api: Api) {
                 } else {
                     for (item in it.status.payload) {
                         val obj = CourseWithMetadataAndCommentsEntity(
-                            CourseSourceEntity(item.uid, item.title, item.source, item.courseUid, item.users),
+                            CourseSourceEntity(item.uid, item.title, item.source, item.courseUid, item.author),
                             ItemMetadataEntity(LikesEntity()) // TODO add likes support and process them (replace stub)
                         )
                         result.add(obj)

@@ -1,10 +1,8 @@
 package ru.home.collaborativeeducation.ui.addNew.source
 
 import android.os.Bundle
-import android.view.View
 import android.webkit.URLUtil
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.add_new_datasource_fragment.*
 import ru.home.collaborativeeducation.R
 import ru.home.collaborativeeducation.model.CourseSourceItem
@@ -37,7 +35,7 @@ class AddSourceFragment : BaseAddFragment() {
             categoryNameInput.text.toString(),
             datasourceInput.text.toString(),
             arguments!!.getParcelable<CourseViewItem>(PAYLOAD)!!.uid!!,
-            arrayListOf<String>(Cache(context!!).getUuid()))
+            Cache(context!!).getUuid())
 
         if (URLUtil.isValidUrl(datasourceInput.text.toString())) {
             viewModel.onSaveSource(selectedItem as CourseSourceItem)

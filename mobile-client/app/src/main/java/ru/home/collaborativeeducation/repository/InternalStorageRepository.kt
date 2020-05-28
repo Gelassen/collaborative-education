@@ -168,7 +168,7 @@ class InternalStorageRepository(context: Context) {
     private fun convertToLocalSource(data: List<CourseSourceItem>): List<CourseSourceEntity> {
         val result = arrayListOf<CourseSourceEntity>()
         for (item in data) {
-            result.add(CourseSourceEntity(if (item.uid!! == -1L) null else item.uid!!, item.title!!, item.source!!, item.courseUid, item.users))
+            result.add(CourseSourceEntity(if (item.uid!! == -1L) null else item.uid!!, item.title!!, item.source!!, item.courseUid, item.author))
         }
         return result
     }

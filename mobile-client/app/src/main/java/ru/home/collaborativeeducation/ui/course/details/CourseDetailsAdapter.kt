@@ -1,14 +1,12 @@
 package ru.home.collaborativeeducation.ui.course.details
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import ru.home.collaborativeeducation.App
 import ru.home.collaborativeeducation.R
 import ru.home.collaborativeeducation.model.*
 import ru.home.collaborativeeducation.storage.Cache
@@ -25,6 +23,8 @@ class CourseDetailsAdapter : RecyclerView.Adapter<CourseDetailsAdapter.ViewHolde
     private val model: MutableList<CourseWithMetadataAndComments> = mutableListOf()
 
     private lateinit var cache: Cache
+
+    private lateinit var courseAuthor: String
 
     fun addItem(item: CourseWithMetadataAndComments) {
         this.model.add(item)
@@ -48,8 +48,9 @@ class CourseDetailsAdapter : RecyclerView.Adapter<CourseDetailsAdapter.ViewHolde
         this.clickListener = listener
     }
 
-    fun onInit(context: Context) {
+    fun onInit(context: Context, author: String) {
         cache = Cache(context)
+        courseAuthor = author
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -120,7 +121,7 @@ class CourseDetailsAdapter : RecyclerView.Adapter<CourseDetailsAdapter.ViewHolde
     }
 
     private fun isThisUserAuthor(source: CourseSourceItem): Boolean {
-        return source.users.contains(cache.getUuid())
+        return source.author.equals(courseAuthor)
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

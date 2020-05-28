@@ -3,12 +3,10 @@ package ru.home.collaborativeeducation.ui.addNew
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import ru.home.collaborativeeducation.R
 import ru.home.collaborativeeducation.model.CategoryViewItem
-import ru.home.collaborativeeducation.model.CourseSourceItem
 import ru.home.collaborativeeducation.model.CourseViewItem
 import ru.home.collaborativeeducation.ui.addNew.category.AddCategoryFragment
 import ru.home.collaborativeeducation.ui.addNew.course.AddCourseFragment

@@ -9,6 +9,7 @@ public class CoursePayload implements Payload {
     private String title;
     @SerializedName("course_uid")
     private Long categoryUid;
+    private String author;
 
     public CoursePayload() {
     }
@@ -41,5 +42,13 @@ public class CoursePayload implements Payload {
 
     public void setCategoryUid(Long categoryUid) {
         this.categoryUid = categoryUid;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

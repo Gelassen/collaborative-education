@@ -63,7 +63,7 @@ class CourseDetailsFragment : BaseListFragment<CourseDetailsViewModel, CourseDet
         payloadCourse = arguments!!.getParcelable<CourseViewItem>(PAYLOAD_COURSE)!!
 
         (list.adapter as CourseDetailsAdapter).setListener(this)
-        (list.adapter as CourseDetailsAdapter).onInit(context!!)
+        (list.adapter as CourseDetailsAdapter).onInit(context!!, payloadCourse.author)
 
         val divider = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
         divider.setDrawable(ContextCompat.getDrawable(context!!, R.drawable.bg_sources_divider)!!)

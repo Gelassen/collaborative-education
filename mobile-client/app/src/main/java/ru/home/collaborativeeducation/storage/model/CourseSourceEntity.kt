@@ -13,5 +13,5 @@ data class CourseSourceEntity(
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "source") val source: String,
     @ColumnInfo(name = "course_uid") val courseId: Long,
-    @ColumnInfo(name = "users") val users: ArrayList<String>?
+    @ColumnInfo(name = "users") val author: String
 )

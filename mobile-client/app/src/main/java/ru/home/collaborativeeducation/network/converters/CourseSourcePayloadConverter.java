@@ -26,8 +26,7 @@ public class CourseSourcePayloadConverter implements JsonDeserializer<CourseSour
         result.setTitle(root.get("title").getAsString());
         result.setCourseUid(root.get("course_uid").getAsLong());
         result.setSource(root.get("source").getAsString());
-        JsonElement users = root.get("users");
-        result.setUsers(getUsers(users));
+        result.setAuthor(root.get("author").getAsString());
         return result;
     }
 

@@ -48,7 +48,7 @@ class CourseViewModel : ViewModel() {
                 .map{data ->
                     val result: MutableList<CourseViewItem> = ArrayList()
                     for (item in data) {
-                        result.add(CourseViewItem(item.uid, item.title, item.categoryUid))
+                        result.add(CourseViewItem(item.uid, item.title, item.categoryUid, item.author))
                     }
                     result
                 }

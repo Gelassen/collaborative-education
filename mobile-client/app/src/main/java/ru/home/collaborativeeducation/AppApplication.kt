@@ -118,13 +118,13 @@ class AppApplication : Application() {
         result.add(CourseSourceItem(
             -1, "Course source title",
             "Link on video", courses.get(0),
-            arrayListOf<String>(Cache(this).getUuid())
+            Cache(this).getUuid()
         ))
         result.add(CourseSourceItem(
             -1, "Alternative source title",
             "Alternative Link on video",
             courses.get(0),
-            arrayListOf<String>("<Alternative author>")
+            "<Alternative author>"
         ))
         return result
     }
@@ -139,9 +139,9 @@ class AppApplication : Application() {
 
     fun getCourseData(categories: List<Long>): MutableList<CourseViewItem> {
         val list = mutableListOf<CourseViewItem>()
-        list.add(CourseViewItem(1, "First: Course 1", categories.get(0)))
-        list.add(CourseViewItem(2, "First: Course 2", categories.get(0)))
-        list.add(CourseViewItem(3, "Second: Course 1", categories.get(2)))
+        list.add(CourseViewItem(1, "First: Course 1", categories.get(0), Cache(this).getUuid()))
+        list.add(CourseViewItem(2, "First: Course 2", categories.get(0), Cache(this).getUuid()))
+        list.add(CourseViewItem(3, "Second: Course 1", categories.get(2), Cache(this).getUuid()))
         return list
     }
 
