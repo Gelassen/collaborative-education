@@ -61,7 +61,7 @@ class NetworkRepository(val api: Api) {
     }
 
     fun saveCourseViewItem(data: CourseViewItem): Observable<CourseViewItem> {
-        val payload = CoursePayload(data.uid, data.title, data.categoryUid)
+        val payload = CoursePayload(data.uid, data.title, data.categoryUid, data.author)
         return api.create(payload)
             .flatMap {  it ->
                 lateinit var response: CourseViewItem

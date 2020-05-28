@@ -14,10 +14,11 @@ public class CoursePayload implements Payload {
     public CoursePayload() {
     }
 
-    public CoursePayload(Long uid, String title, Long categoryUid) {
+    public CoursePayload(Long uid, String title, Long categoryUid, String author) {
         this.uid = uid;
         this.title = title;
         this.categoryUid = categoryUid;
+        this.author = author;
     }
 
     public Long getUid() {
