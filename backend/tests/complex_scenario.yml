@@ -27,7 +27,7 @@ scenarios:
 
     - post:
         url: "/course/create"
-        body: "{\"course_uid\":{{ category_uid }},\"title\":\"second\",\"uid\":0}"
+        body: "{\"course_uid\":{{ category_uid }},\"title\":\"second\",\"uid\":0, \"author\": \"843b2df0-96f4-489d-aa5d-238493c91173\"}"
 
     - get:
         url: "/category/{{ category_uid }}/course/"
@@ -37,7 +37,7 @@ scenarios:
 
     - post:
         url: "/category/{{ category_uid }}/course/"
-        body: "{\"courseUid\":{{ course_uid }},\"source\":\"test_url\",\"title\":\"test_source\",\"uid\":0,\"users\":[\"843b2df0-96f4-489d-aa5d-238493c91173\"]}"
+        body: "{\"courseUid\":{{ course_uid }},\"source\":\"test_url\",\"title\":\"test_source\",\"uid\":0,\"author\":\"843b2df0-96f4-489d-aa5d-238493c91173\"}"
 
     - get:
         url: "/category/{{ category_uid }}/course/{{ course_uid }}/source"
