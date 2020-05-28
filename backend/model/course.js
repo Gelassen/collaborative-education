@@ -45,13 +45,13 @@ exports.create = function(req) {
         pool.getConnection(function(err, connection) {
             var body = req.body
             connection.query(
-                'INSERT INTO course SET title = ?, course_uid = ?;', 
-                [body.title, body.course_uid], 
+                'INSERT INTO course SET title = ?, course_uid = ?, author = ?;', 
+                [body.title, body.course_uid, body.author], 
                 function(error, rows, fields) {
                     if (error != null) {
                         console.log(JSON.stringify(error))
                         var payload = []
-                        payload.push({uid: -1, title: "", course_uid: body.course_uid})
+                        payload.push({uid: -1, title: "", course_uid: body.course_uid, author: ""})
                         var response = util.getErrorMessage(payload)
                         resolve(response)
                     } else {

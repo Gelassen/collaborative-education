@@ -27,7 +27,7 @@ exports.getSpecific = function(req) {
                 function(error, rows, fields) {
                     if (error != null) {
                         var payload = []
-                        payload.push({uid: -1, title: "", source: "", course_uid: req.params.courseId, users: []})
+                        payload.push({uid: -1, title: "", source: "", course_uid: req.params.courseId, users: [], author: ""})
                         var response = util.getErrorMessage(payload)
                         resolve(response)
                     } else {
@@ -47,7 +47,7 @@ exports.mapper = function(rows) {
         var item = rows[id];
         result.push(
             {
-                source: { uid: item.uid, title: item.title, source: item.source, course_uid: item.course_uid, users: item.users },
+                source: { uid: item.uid, title: item.title, source: item.source, course_uid: item.course_uid, users: item.users, author: item.author },
                 metadata: {
                     likes : { likesUid: item.likesUid, counter: item.counter, courseUid: item.uid, users: item.usersLiked }, 
                     comments : []
@@ -61,7 +61,7 @@ exports.getSpecificWithMeta = function(req) {
     return new Promise((resolve) => {
         pool.getConnection(function(err, connection) {
             connection.query(
-                'SELECT uid, title, source, sources.course_uid, sources.users, likes_uid as likesUid, counter, likes.course_uid as courseUid, likes.users as usersLiked ' + 
+                'SELECT uid, title, source, sources.course_uid, sources.users, author, likes_uid as likesUid, counter, likes.course_uid as courseUid, likes.users as usersLiked ' + 
                 'FROM course_source as sources ' + 
                 'LEFT JOIN likes as likes on sources.uid = likes.course_uid ' + 
                 'WHERE sources.course_uid = ?;',
@@ -90,13 +90,13 @@ exports.create = function(req) {
             console.log(JSON.stringify(body))
             console.log(JSON.stringify(body.users))
             connection.query(
-                'INSERT INTO course_source SET title = ?, source = ?, course_uid = ?, users = ?;', 
-                [body.title, body.source, body.courseUid, JSON.stringify(body.users)], 
+                'INSERT INTO course_source SET title = ?, source = ?, course_uid = ?, users = ?, author = ?;', 
+                [body.title, body.source, body.courseUid, JSON.stringify(body.users), author], 
                 function(error, rows, fields) {
                     if (error != null) {
                         console.log(JSON.stringify(error))
                         var emptyResponse = []
-                        emptyResponse.push({uid: -1, title: "", source: "", course_uid: body.courseUid, users: []})
+                        emptyResponse.push({uid: -1, title: "", source: "", course_uid: body.courseUid, users: [], author: ""})
                         var response = util.getErrorMessage(module.exports.mapper(emptyResponse))
                         response.status.payload.metadata = { likes: { likesUid: null, counter: null, courseUid: null, users: null }, comments: [], pdata: null }
                         resolve(response)
