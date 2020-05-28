@@ -1,12 +1,14 @@
 package ru.home.collaborativeeducation.ui.course.details
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import ru.home.collaborativeeducation.App
 import ru.home.collaborativeeducation.R
 import ru.home.collaborativeeducation.model.*
 import ru.home.collaborativeeducation.storage.Cache
@@ -26,7 +28,7 @@ class CourseDetailsAdapter : RecyclerView.Adapter<CourseDetailsAdapter.ViewHolde
 
     fun addItem(item: CourseWithMetadataAndComments) {
         this.model.add(item)
-        notifyDataSetChanged()
+        notifyItemInserted(model.size - 1)
     }
 
     fun update(data: List<CourseWithMetadataAndComments>) {

@@ -1,7 +1,5 @@
 package ru.home.collaborativeeducation.network.converters;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
@@ -15,7 +13,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.home.collaborativeeducation.App;
 import ru.home.collaborativeeducation.model.Likes;
 
 public class LikesConverter implements JsonDeserializer<Likes> {
@@ -23,7 +20,6 @@ public class LikesConverter implements JsonDeserializer<Likes> {
     @Override
     public Likes deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         Likes likes = new Likes();
-        Log.d(App.DEBUG, "Likes response: " + json);
         JsonObject root = (JsonObject) json;
         likes.setLikesUid((root.get("likesUid") == null || root.get("likesUid").isJsonNull()) ? -1 : root.get("likesUid").getAsLong());
         likes.setCounter((root.get("counter") == null || root.get("counter").isJsonNull()) ? 0 : root.get("counter").getAsLong());

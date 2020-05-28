@@ -2,16 +2,19 @@ package ru.home.collaborativeeducation.ui.course.details
 
 import android.util.Log
 import androidx.lifecycle.*
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import ru.home.collaborativeeducation.App
 import ru.home.collaborativeeducation.AppApplication
 import ru.home.collaborativeeducation.model.CourseWithMetadataAndComments
+import ru.home.collaborativeeducation.model.comparator.RateSourceFilter
 import ru.home.collaborativeeducation.network.NetworkRepository
 import ru.home.collaborativeeducation.repository.InternalStorageRepository
 import ru.home.collaborativeeducation.storage.Cache
 import ru.home.collaborativeeducation.ui.IModelListener
+import java.util.*
 import javax.inject.Inject
 
 class CourseDetailsViewModel: ViewModel() {
@@ -47,6 +50,10 @@ class CourseDetailsViewModel: ViewModel() {
                     if (listener != null) {
                         listener!!.onServerError()
                     }
+                }
+                .flatMap { it ->
+                    Collections.sort(it, RateSourceFilter(true))
+                    Observable.just(it)
                 }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

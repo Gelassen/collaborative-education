@@ -1,5 +1,7 @@
 package ru.home.collaborativeeducation.network.converters;
 
+import android.util.Log;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -12,6 +14,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.home.collaborativeeducation.App;
 import ru.home.collaborativeeducation.model.Comment;
 import ru.home.collaborativeeducation.model.CourseSourceItem;
 import ru.home.collaborativeeducation.model.CourseWithMetadataAndComments;
@@ -75,7 +78,8 @@ public class ApiCourseWithMetaConverter implements JsonDeserializer<ApiResponse<
                     new TypeToken<Likes>(){}.getType(),
                     context
             );
-            likes.setCourseUid(courseSource.getCourseUid()); // majority of items in server db has null params
+            likes.setCourseUid(courseSource.getUid()); // majority of items in server db has null params
+
             // TODO parse comments
             List<Comment> comments = new ArrayList<>();
             result.add(new CourseWithMetadataAndComments(

@@ -18,6 +18,8 @@ class ItemMetadata() : Parcelable {
         comments = parcel.createTypedArrayList(Comment)!!
     }
 
+
+
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeParcelable(likes, flags)
         parcel.writeTypedList(comments)
@@ -25,6 +27,10 @@ class ItemMetadata() : Parcelable {
 
     override fun describeContents(): Int {
         return 0
+    }
+
+    override fun toString(): String {
+        return "ItemMetadata(likes=${likes.toString()}, comments=$comments)"
     }
 
     companion object CREATOR : Parcelable.Creator<ItemMetadata> {

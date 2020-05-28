@@ -95,10 +95,10 @@ class NetworkRepository(val api: Api) {
             }
     }
 
-    fun getSourcesWithMetaForCourse(categoryUid: String, courseUid: String): Observable<List<CourseWithMetadataAndComments>> {
+    fun getSourcesWithMetaForCourse(categoryUid: String, courseUid: String): Observable<MutableList<CourseWithMetadataAndComments>> {
         return api.getAllSourcesWithMetaForCourse(categoryUid, courseUid)
             .flatMap { it ->
-                lateinit var response: List<CourseWithMetadataAndComments>
+                lateinit var response: MutableList<CourseWithMetadataAndComments>
                 if (it.code != 200) {
                     response = mutableListOf()
                 } else {

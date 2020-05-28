@@ -42,6 +42,10 @@ class Likes(): Parcelable, Payload {
         return 0
     }
 
+    override fun toString(): String {
+        return "Likes(likesUid=$likesUid, counter=$counter, courseUid=$courseUid, users=$users)"
+    }
+
     companion object CREATOR : Parcelable.Creator<Likes> {
         override fun createFromParcel(parcel: Parcel): Likes {
             return Likes(parcel)
