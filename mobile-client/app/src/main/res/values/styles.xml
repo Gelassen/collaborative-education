@@ -12,6 +12,7 @@
         <item name="android:layout_width">228dp</item>
         <item name="android:layout_marginStart">16dp</item>
         <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:minEms">5</item>
         <item name="android:background">@drawable/bg_edit_field</item>
         <item name="android:backgroundTint">@color/colorAccent</item>
         <item name="android:textColor">@android:color/background_dark</item>

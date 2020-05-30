@@ -10,10 +10,28 @@ Category:
  as a Member of community I increase the rate of the data source 
  
  Implementation: 
-  - author course source and alternative source are presented on the same page, distinguished by label ('author', 'alternative'), sorted by rate 
-  - course source has comments sorted by rate as well, the aim of the comment is to provide additional information  (Does app really need it?)
-  - mechanics of feedback [a] to community [b] to author [c] to deveoper or open source community (promised and achieved, new ideas, how did it help community member, broken sources)
+  - author's course source and alternative source are presented on the same page, distinguished by label ('author', 'alternative'), sorted by rate (mitigate risks) 
+  - course's source has comments sorted by rate as well, the aim of the comment is to provide additional information  (Does app really need it?)
+  - mechanics of feedback [a] to community [b] to author [c] to developer or open source community (promised and achieved, new ideas, how did it help community member, broken sources)
  
- 
+  - unique identifier is hardware number, keeping it for user's operation sign  
+  - separate operation's sign and the rest of data (for the first stage)
   
+  - [do not forget run db server]
+  - [migrate on Koin]
+  - [confirm atomic / transactional change on rate to keep data integrity]
+  - [sort by rate]
+  - [pagination for big data sets]
+  
+  - account collab.edu.russia@gmail.com
  
+ Scope: 
+ 
+	Client: 
+		- add rate feature 
+		- distinguish author's and an alternative sources
+		- create and implement design for the app 
+		- connect to the server 
+	
+	Server: 
+		- push and fetch data for multiple users 
