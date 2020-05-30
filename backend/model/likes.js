@@ -7,13 +7,13 @@ exports.getAll = function(req, res) {
             connection.query(
                 'SELECT * FROM likes;', 
                 function(error, rows, fields) {
+                    connection.release()
                     if (error != null) {
                         resolve(JSON.stringify(util.getErrorMessage()))
                     } else {
                         resolve(JSON.stringify(util.getPayloadMessage(rows)))
                     }
             })
-            connection.release()
         });
     })
 }
@@ -26,6 +26,7 @@ exports.getSpecific = function(req) {
                 'SELECT * FROM likes WHERE course_uid = ?;', 
                 [req.params.id], 
                 function(error, rows, fields) {
+                    connection.release()
                     if (error != null) {
                         resolve(JSON.stringify(util.getErrorMessage()))
                     } else {
@@ -33,7 +34,6 @@ exports.getSpecific = function(req) {
                     }
                 }
             )
-            connection.release()
         });
     })
 }
@@ -48,6 +48,7 @@ exports.create = function(req) {
                 'INSERT INTO likes SET counter = ?, course_uid = ?, users = ?;', 
                 [likes.counter, likes.courseUid, JSON.stringify(likes.users)], 
                 function(error, rows, fields) {
+                    connection.release()
                     if (error != null) {
                         console.log(JSON.stringify(error))
                         var payload = []
@@ -65,7 +66,6 @@ exports.create = function(req) {
                     }
                 }
             )
-            connection.release()
         });
     })
 }
@@ -79,6 +79,7 @@ exports.update = function(req) {
                 'UPDATE likes SET counter = ?, course_uid = ?, users = ? WHERE likes_uid = ?;',
                 [likes.counter, likes.courseUid, JSON.stringify(likes.users), likes.likesUid],
                 function(error, rows, fields) {
+                    connection.release()
                     if (error != null) {
                         console.log(JSON.stringify(error))
                         var payload = []
@@ -96,7 +97,6 @@ exports.update = function(req) {
                     }
                 }
             )
-            connection.release()
         })
     })
 }
@@ -109,6 +109,7 @@ exports.delete = function(req) {
                 'DELETE FROM likes WHERE course_uid = ?;', 
                 [req.params.id], 
                 function(err, rows, fields) {
+                    connection.release()
                     if (err != null) {
                         resolve(JSON.stringify(util.getErrorMessage()))
                     } else {
@@ -116,7 +117,6 @@ exports.delete = function(req) {
                     }
                 }
             )
-            connection.release() 
         });
     })
 }

@@ -24,6 +24,10 @@ pool.on('connection', function(connection) {
 
 });
 
+pool.on('release', function (connection) {
+    console.log('Connection %d released', connection.threadId);
+});
+
 module.exports = {
     getConnection: (callback) => {
         return pool.getConnection(callback)

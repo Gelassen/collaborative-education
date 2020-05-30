@@ -7,13 +7,13 @@ exports.getAll = function(req, res) {
             connection.query(
                 'SELECT * FROM course', 
                 function(error, rows, fields) {
+                    connection.release()
                     if (error != null) {
                         resolve(JSON.stringify(util.getErrorMessage()))
                     } else {
                         resolve(JSON.stringify(util.getPayloadMessage(rows)))
                     }
             })
-            connection.release()
         });
     })
 }
@@ -26,6 +26,7 @@ exports.getSpecific = function(req) {
                 'SELECT * FROM course WHERE course_uid = ?;', 
                 [req.params.id], 
                 function(error, rows, fields) {
+                    connection.release()
                     if (error != null) {
                         resolve(JSON.stringify(util.getErrorMessage()))
                     } else {
@@ -35,7 +36,6 @@ exports.getSpecific = function(req) {
                     }
                 }
             )
-            connection.release()
         });
     })
 }
@@ -48,6 +48,7 @@ exports.create = function(req) {
                 'INSERT INTO course SET title = ?, course_uid = ?, author = ?;', 
                 [body.title, body.course_uid, body.author], 
                 function(error, rows, fields) {
+                    connection.release()
                     if (error != null) {
                         console.log(JSON.stringify(error))
                         var payload = []
@@ -63,7 +64,6 @@ exports.create = function(req) {
                     }
                 }
             )
-            connection.release()
         });
     })
 }
@@ -76,6 +76,7 @@ exports.delete = function(req) {
                 'DELETE FROM course WHERE course_uid = ?;', 
                 [req.params.id], 
                 function(err, rows, fields) {
+                    connection.release()
                     if (err != null) {
                         resolve(JSON.stringify(util.getErrorMessage()))
                     } else {
@@ -83,7 +84,6 @@ exports.delete = function(req) {
                     }
                 }
             )
-            connection.release() 
         });
     })
 }

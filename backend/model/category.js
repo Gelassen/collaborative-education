@@ -7,13 +7,13 @@ exports.getAll = function(req, res) {
             connection.query(
                 'SELECT * FROM category', 
                 function(error, rows, fields) {
+                    connection.release()
                     if (error != null) {
                         resolve(JSON.stringify(util.getErrorMessage()))
                     } else {
                         resolve(JSON.stringify(util.getPayloadMessage(rows)))
                     }
             })
-            connection.release()
         });
     })
 }
@@ -26,6 +26,7 @@ exports.getSpecific = function(req) {
                 'SELECT * FROM cageory WHERE uid = ?;', 
                 [req.params.id], 
                 function(error, rows, fields) {
+                    connection.release()
                     if (error != null) {
                         resolve(JSON.stringify(util.getErrorMessage()))
                     } else {
@@ -33,7 +34,6 @@ exports.getSpecific = function(req) {
                     }
                 }
             )
-            connection.release()
         });
     })
 }
@@ -46,6 +46,7 @@ exports.edit = function(req) {
                 'UPDATE category SET title = ? WHERE uid = ?', 
                 [body.title, req.params.id], 
                 function(error, rows, fields) {
+                    connection.release()
                     if (error != null) {
                         resolve(JSON.stringify(util.getErrorMessage()))
                     } else {
@@ -54,7 +55,6 @@ exports.edit = function(req) {
                     
                 }
             )
-            connection.release()
         });
     })
 }
@@ -67,6 +67,7 @@ exports.create = function(req) {
                 'INSERT INTO category SET title = ?', 
                 [param], 
                 function(error, rows, fields) {
+                    connection.release()
                     if (error != null) {
                         console.log(JSON.stringify(error))
                         resolve(JSON.stringify(util.getErrorMessage()))
@@ -79,7 +80,6 @@ exports.create = function(req) {
                     }
                 }
             )
-            connection.release()
         });
     })
 }
@@ -92,6 +92,7 @@ exports.delete = function(req) {
                 'DELETE FROM category WHERE uid = ?;', 
                 [req.params.id], 
                 function(err, rows, fields) {
+                    connection.release()
                     if (err != null) {
                         resolve(JSON.stringify(util.getErrorMessage()))
                     } else {
@@ -99,7 +100,6 @@ exports.delete = function(req) {
                     }
                 }
             )
-            connection.release() 
         });
     })
 }
