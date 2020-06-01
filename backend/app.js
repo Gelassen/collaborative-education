@@ -1,4 +1,5 @@
-
+// import * as Sentry from '@sentry/node';
+const Sentry = require('@sentry/node');
 var express = require('express');
 var bodyParser = require('body-parser');
 var config = require('./config')
@@ -12,6 +13,13 @@ var likes = require('./controllers/likes')
 const hostname = config.WEBSERVICE_HOST;
 const port = config.WEBSERVICE_PORT;
 
+Sentry.init({ 
+    dsn: 'https://98190676bccf4e75be3f660fa2b19667@o400397.ingest.sentry.io/5258811',
+    attachStacktrace: true,
+    debug: true
+});
+
+app.use(Sentry.Handlers.requestHandler());
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
@@ -76,6 +84,9 @@ app.post('/v1/like/create', function(req, res, next) {
     console.log("hit /v1/like/create")
     likes.create(req, res)
 })
+
+// The error handler must be before any other error middleware and after all controllers
+app.use(Sentry.Handlers.errorHandler());
 
 app.listen(3000)
 
