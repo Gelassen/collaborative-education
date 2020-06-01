@@ -1,3 +1,4 @@
+
 var express = require('express');
 var bodyParser = require('body-parser');
 var config = require('./config')
@@ -15,7 +16,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
 app.use(function(req, res, next) {
-    console.log("[REQUEST] " + JSON.stringify(req.path))
+    console.log("[REQUEST] " + JSON.stringify(req.path) + " at " + new Date().toLocalString())
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
     next()
@@ -23,6 +24,8 @@ app.use(function(req, res, next) {
 
 app.get('/v1/', function(req, res, next) {
     res.send('Hello to collaborative education server!')
+    myUndefinedFunction();
+
 })
 
 app.get('/v1/category', function(req, res, next) {

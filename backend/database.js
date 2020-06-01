@@ -28,6 +28,14 @@ pool.on('release', function (connection) {
     console.log('Connection %d released', connection.threadId);
 });
 
+pool.on('connection', function (connection) {
+    log.debug('Connected with threadId: ', connection.threadId);
+});
+
+pool.on('enqueue', function () {
+    log.info('Waiting for available connection slot');
+});
+
 module.exports = {
     getConnection: (callback) => {
         return pool.getConnection(callback)
