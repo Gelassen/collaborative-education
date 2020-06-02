@@ -31,8 +31,6 @@ app.use(function(req, res, next) {
 
 app.get('/v1/', function(req, res, next) {
     res.send('Hello to collaborative education server!')
-    myUndefinedFunction();
-
 })
 
 app.get('/v1/category', function(req, res, next) {
