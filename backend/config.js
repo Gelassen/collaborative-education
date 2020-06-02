@@ -1,9 +1,9 @@
 let config = {
-  WEBSERVICE_HOST: '127.0.0.1', // '84.201.133.46',
+  WEBSERVICE_HOST: '127.0.0.1', 
   WEBSERVICE_PORT:  3000,
   DATABASE_HOST: '127.0.0.1',
   DATABASE_PORT: 3306,
-  USER: 'root', // 'gelassen',
+  USER: 'root', 
   PWD: 'root',
   DATABASE: 'db_collaborative_edu'
 }

@@ -29,11 +29,11 @@ pool.on('release', function (connection) {
 });
 
 pool.on('connection', function (connection) {
-    log.debug('Connected with threadId: ', connection.threadId);
+    console.log('Connected with threadId: ', connection.threadId);
 });
 
 pool.on('enqueue', function () {
-    log.info('Waiting for available connection slot');
+    console.log('Waiting for available connection slot');
 });
 
 module.exports = {

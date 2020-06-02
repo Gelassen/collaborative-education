@@ -7,7 +7,6 @@ exports.getAll = function(req, res) {
             connection.query(
                 'SELECT * FROM course_source', 
                 function(error, rows, fields) {
-                    connection.release()
                     if (error != null) {
                         resolve(JSON.stringify(util.getErrorMessage()))
                     } else {
@@ -25,7 +24,6 @@ exports.getSpecific = function(req) {
                 'SELECT * FROM course_source WHERE course_uid = ?;', 
                 [req.params.courseId], 
                 function(error, rows, fields) {
-                    connection.release()
                     if (error != null) {
                         var payload = []
                         payload.push({uid: -1, title: "", source: "", course_uid: req.params.courseId, author: ""})
@@ -67,7 +65,6 @@ exports.getSpecificWithMeta = function(req) {
                 'WHERE sources.course_uid = ?;',
                 [req.params.courseId],
                 function(error, rows, fields) {
-                    connection.release()
                     if (error != null) {
                         console.log("Failed to query sources with meta", error)
                         var response = util.getErrorMessage(module.exports.mapper(rows))
@@ -93,7 +90,6 @@ exports.create = function(req) {
                 'INSERT INTO course_source SET title = ?, source = ?, course_uid = ?, author = ?;', 
                 [body.title, body.source, body.courseUid, body.author], 
                 function(error, rows, fields) {
-                    connection.release()
                     if (error != null) {
                         console.log(JSON.stringify(error))
                         var emptyResponse = []
@@ -124,7 +120,6 @@ exports.delete = function(req) {
                 'DELETE FROM course_source WHERE course_uid = ?;', 
                 [req.params.id], 
                 function(err, rows, fields) {
-                    connection.release()
                     if (err != null) {
                         resolve(JSON.stringify(util.getErrorMessage()))
                     } else {

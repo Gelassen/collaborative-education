@@ -1,4 +1,3 @@
-// import * as Sentry from '@sentry/node';
 const Sentry = require('@sentry/node');
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -24,7 +23,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
 app.use(function(req, res, next) {
-    console.log("[REQUEST] " + JSON.stringify(req.path) + " at " + new Date().toLocalString())
+    console.log("[REQUEST] " + JSON.stringify(req.path) + " at " + new Date().toISOString());
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
     next()
