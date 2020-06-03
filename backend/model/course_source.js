@@ -12,6 +12,7 @@ exports.getAll = function(req, res) {
                     } else {
                         resolve(JSON.stringify(util.getPayloadMessage(rows)))
                     }
+                    connection.release()
             })
         });
     })
@@ -33,6 +34,7 @@ exports.getSpecific = function(req) {
                         var response = util.getPayloadMessage(rows)
                         resolve(response)
                     }
+                    connection.release()
                 }
             )
         });
@@ -76,6 +78,7 @@ exports.getSpecificWithMeta = function(req) {
                         console.log("Course source Response: " + JSON.stringify(response))
                         resolve(response)
                     }
+                    connection.release()
                 }
             )
         })
@@ -108,6 +111,7 @@ exports.create = function(req) {
                         console.log("Course source insert reponse: " + JSON.stringify(response)) 
                         resolve(response)
                     }
+                    connection.release()
                 }
             )
         });
@@ -127,6 +131,7 @@ exports.delete = function(req) {
                     } else {
                         resolve(JSON.stringify(util.getPayloadMessage((rows.affectRows == 0) ? "Data hasn't been deleted" : "Data has been deleted")))
                     }
+                    connection.release()
                 }
             )
         });

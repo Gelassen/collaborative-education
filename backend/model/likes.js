@@ -12,6 +12,7 @@ exports.getAll = function(req, res) {
                     } else {
                         resolve(JSON.stringify(util.getPayloadMessage(rows)))
                     }
+                    connection.release()
             })
         });
     })
@@ -30,6 +31,7 @@ exports.getSpecific = function(req) {
                     } else {
                         resolve(JSON.stringify(util.getPayloadMessage(rows)))
                     }
+                    connection.release()
                 }
             )
         });
@@ -61,6 +63,7 @@ exports.create = function(req) {
                         console.log("Response: " + JSON.stringify(response))
                         resolve(util.getPayloadMessage(response))
                     }
+                    connection.release()
                 }
             )
         });
@@ -91,6 +94,7 @@ exports.update = function(req) {
                         console.log("Response: " + JSON.stringify(response))
                         resolve(util.getPayloadMessage(response))
                     }
+                    connection.release()
                 }
             )
         })
@@ -110,6 +114,7 @@ exports.delete = function(req) {
                     } else {
                         resolve(JSON.stringify(util.getPayloadMessage((rows.affectRows == 0) ? "Data hasn't been deleted" : "Data has been deleted")))
                     }
+                    connection.release()
                 }
             )
         });
