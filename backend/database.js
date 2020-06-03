@@ -4,9 +4,9 @@ var config = require('./config')
 var config = {
 	host     : config.DATABASE_HOST,
 	user     : config.USER,
-	password : config.PWD,
-        database : config.DATABASE,
-        connectionLimit: '150'
+    password : config.PWD,
+    database : config.DATABASE,
+    connectionLimit: '150'
 };
 
 var pool = mysql.createPool(config);

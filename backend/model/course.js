@@ -5,7 +5,7 @@ exports.getAll = function(req, res) {
     return new Promise( (resolve) => {
         pool.getConnection(function(err, connection) {
             connection.query(
-                'SELECT * FROM course', 
+                {sql: 'SELECT * FROM course', timeout: 60000}, 
                 function(error, rows, fields) {
                     if (error != null) {
                         resolve(JSON.stringify(util.getErrorMessage()))
@@ -22,7 +22,7 @@ exports.getSpecific = function(req) {
         pool.getConnection(function(err, connection) {
             console.log("req.params.id: " + pool.escape(req.params.id))
             connection.query(
-                'SELECT * FROM course WHERE course_uid = ?;', 
+                {sql: 'SELECT * FROM course WHERE course_uid = ?;', timeout: 60000 }, 
                 [req.params.id], 
                 function(error, rows, fields) {
                     if (error != null) {
@@ -43,7 +43,7 @@ exports.create = function(req) {
         pool.getConnection(function(err, connection) {
             var body = req.body
             connection.query(
-                'INSERT INTO course SET title = ?, course_uid = ?, author = ?;', 
+                {sql: 'INSERT INTO course SET title = ?, course_uid = ?, author = ?;', timeout: 60000}, 
                 [body.title, body.course_uid, body.author], 
                 function(error, rows, fields) {
                     if (error != null) {
@@ -70,7 +70,7 @@ exports.delete = function(req) {
         pool.getConnection(function(err, connection) {
             console.log("exports.delete: " + pool.escape(req.params.id))
             connection.query(
-                'DELETE FROM course WHERE course_uid = ?;', 
+                {sql: 'DELETE FROM course WHERE course_uid = ?;', timeout: 60000 }, 
                 [req.params.id], 
                 function(err, rows, fields) {
                     if (err != null) {

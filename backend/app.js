@@ -40,10 +40,12 @@ app.get('/v1/category', function(req, res, next) {
 })
 
 app.get('/v1/category/:id', function(req, res, next) {
+    pool.status()
     tasks.specific(req, res)
 })
 
 app.post('/v1/category/create', function(req, res, next) {
+    pool.status()
     tasks.create(req, res)
 })
 
@@ -56,26 +58,32 @@ app.post('/v1/category/delete/:id', function(req, res, next) {
 });
 
 app.get('/v1/category/:id/course', function(req, res, next) {
+    pool.status()
     courses.specific(req, res)
 })
 
 app.post('/v1/course/create', function(req, res, next) {
+    pool.status()
     courses.create(req, res)
 })
 
 app.get('/v1/category/:id/course/:courseId/source', function(req, res, next) {
+    pool.status()
     sources.specific(req, res) 
 })
 
 app.post('/v1/source/create', function(req, res, next) {
+    pool.status()
     sources.create(req, res)
 })
 
 app.get('/v1/category/:id/course/:courseId/source/meta', function(req, res, next) {
+    pool.status()
     sources.specificWithMeta(req, res) 
 })
 
 app.get('/v1/category/:id/course/:courseId/source/:sourceId/like', function(req, res, next) {
+    pool.status()
     sources.specific(req, res) 
 })
 

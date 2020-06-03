@@ -5,7 +5,7 @@ exports.getAll = function(req, res) {
     return new Promise( (resolve) => {
         pool.getConnection(function(err, connection) {
             connection.query(
-                'SELECT * FROM course_source', 
+                { sql: 'SELECT * FROM course_source', timeout: 60000 }, 
                 function(error, rows, fields) {
                     if (error != null) {
                         resolve(JSON.stringify(util.getErrorMessage()))
@@ -21,7 +21,7 @@ exports.getSpecific = function(req) {
     return new Promise((resolve) => {
         pool.getConnection(function(err, connection) {
             connection.query(
-                'SELECT * FROM course_source WHERE course_uid = ?;', 
+                { sql: 'SELECT * FROM course_source WHERE course_uid = ?;', timeout: 60000 }, 
                 [req.params.courseId], 
                 function(error, rows, fields) {
                     if (error != null) {
@@ -59,10 +59,12 @@ exports.getSpecificWithMeta = function(req) {
     return new Promise((resolve) => {
         pool.getConnection(function(err, connection) {
             connection.query(
+                {sql: 
                 'SELECT uid, title, source, sources.course_uid, author, likes_uid as likesUid, counter, likes.course_uid as courseUid, likes.users as usersLiked ' + 
                 'FROM course_source as sources ' + 
                 'LEFT JOIN likes as likes on sources.uid = likes.course_uid ' + 
                 'WHERE sources.course_uid = ?;',
+                timeout: 60000 },
                 [req.params.courseId],
                 function(error, rows, fields) {
                     if (error != null) {
@@ -87,7 +89,7 @@ exports.create = function(req) {
             console.log(JSON.stringify(body))
             console.log(JSON.stringify(body.users))
             connection.query(
-                'INSERT INTO course_source SET title = ?, source = ?, course_uid = ?, author = ?;', 
+                {sql: 'INSERT INTO course_source SET title = ?, source = ?, course_uid = ?, author = ?;', timeout: 60000 }, 
                 [body.title, body.source, body.courseUid, body.author], 
                 function(error, rows, fields) {
                     if (error != null) {
@@ -117,7 +119,7 @@ exports.delete = function(req) {
         pool.getConnection(function(err, connection) {
             console.log("exports.delete: " + pool.escape(req.params.id))
             connection.query(
-                'DELETE FROM course_source WHERE course_uid = ?;', 
+                {sql: 'DELETE FROM course_source WHERE course_uid = ?;', timeout: 60000 }, 
                 [req.params.id], 
                 function(err, rows, fields) {
                     if (err != null) {

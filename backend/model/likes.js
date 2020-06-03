@@ -5,7 +5,7 @@ exports.getAll = function(req, res) {
     return new Promise( (resolve) => {
         pool.getConnection(function(err, connection) {
             connection.query(
-                'SELECT * FROM likes;', 
+                { sql: 'SELECT * FROM likes;', timeout: 60000 }, 
                 function(error, rows, fields) {
                     if (error != null) {
                         resolve(JSON.stringify(util.getErrorMessage()))
@@ -22,7 +22,7 @@ exports.getSpecific = function(req) {
         pool.getConnection(function(err, connection) {
             console.log("req.params.id: " + pool.escape(req.params.id))
             connection.query(
-                'SELECT * FROM likes WHERE course_uid = ?;', 
+                { sql: 'SELECT * FROM likes WHERE course_uid = ?;', timeout: 60000 }, 
                 [req.params.id], 
                 function(error, rows, fields) {
                     if (error != null) {
@@ -43,7 +43,7 @@ exports.create = function(req) {
             var likes = body.metadata.likes
             console.log("On likes " + JSON.stringify(body));
             connection.query(
-                'INSERT INTO likes SET counter = ?, course_uid = ?, users = ?;', 
+                { sql: 'INSERT INTO likes SET counter = ?, course_uid = ?, users = ?;', timeout: 60000 }, 
                 [likes.counter, likes.courseUid, JSON.stringify(likes.users)], 
                 function(error, rows, fields) {
                     if (error != null) {
@@ -73,7 +73,7 @@ exports.update = function(req) {
         var likes = body.metadata.likes
         pool.getConnection(function(err, connection) {
             connection.query(
-                'UPDATE likes SET counter = ?, course_uid = ?, users = ? WHERE likes_uid = ?;',
+                { sql: 'UPDATE likes SET counter = ?, course_uid = ?, users = ? WHERE likes_uid = ?;', timeout: 60000 },
                 [likes.counter, likes.courseUid, JSON.stringify(likes.users), likes.likesUid],
                 function(error, rows, fields) {
                     if (error != null) {
@@ -102,7 +102,7 @@ exports.delete = function(req) {
         pool.getConnection(function(err, connection) {
             console.log("exports.delete: " + pool.escape(req.params.id))
             connection.query(
-                'DELETE FROM likes WHERE course_uid = ?;', 
+                { sql: 'DELETE FROM likes WHERE course_uid = ?;', timeout: 60000 }, 
                 [req.params.id], 
                 function(err, rows, fields) {
                     if (err != null) {
