@@ -2,6 +2,7 @@ const Sentry = require('@sentry/node');
 var express = require('express');
 var bodyParser = require('body-parser');
 var config = require('./config')
+var pool = require('./database');
 var app = express();
 
 var tasks = require('./controllers/category')
@@ -34,6 +35,7 @@ app.get('/v1/', function(req, res, next) {
 })
 
 app.get('/v1/category', function(req, res, next) {
+    pool.status()
     tasks.all(req, res)
 })
 

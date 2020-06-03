@@ -5,7 +5,7 @@ exports.getAll = function(req, res) {
     return new Promise( (resolve) => {
         pool.getConnection(function(err, connection) {
             connection.query(
-                'SELECT * FROM category', 
+               {sql:  'SELECT * FROM category', timeout: 60000}, 
                 function(error, rows, fields) {
                     if (error != null) {
                         resolve(JSON.stringify(util.getErrorMessage()))
@@ -22,7 +22,7 @@ exports.getSpecific = function(req) {
         pool.getConnection(function(err, connection) {
             console.log("req.params.id: " + pool.escape(req.params.id))
             connection.query(
-                'SELECT * FROM cageory WHERE uid = ?;', 
+                {sql: 'SELECT * FROM cageory WHERE uid = ?;', timeout: 60000}, 
                 [req.params.id], 
                 function(error, rows, fields) {
                     if (error != null) {
@@ -41,7 +41,7 @@ exports.edit = function(req) {
         pool.getConnection(function(err, connection) {
             var body = req.body.params
             connection.query(
-                'UPDATE category SET title = ? WHERE uid = ?', 
+                {sql: 'UPDATE category SET title = ? WHERE uid = ?', timeout: 60000}, 
                 [body.title, req.params.id], 
                 function(error, rows, fields) {
                     if (error != null) {
@@ -61,7 +61,7 @@ exports.create = function(req) {
         pool.getConnection(function(err, connection) {
             var param = req.body.title;
             connection.query(
-                'INSERT INTO category SET title = ?', 
+                {sql: 'INSERT INTO category SET title = ?', timeout: 60000}, 
                 [param], 
                 function(error, rows, fields) {
                     if (error != null) {
@@ -85,7 +85,7 @@ exports.delete = function(req) {
         pool.getConnection(function(err, connection) {
             console.log("exports.delete: " + pool.escape(req.params.id))
             connection.query(
-                'DELETE FROM category WHERE uid = ?;', 
+                {sql: 'DELETE FROM category WHERE uid = ?;', timeout: 60000}, 
                 [req.params.id], 
                 function(err, rows, fields) {
                     if (err != null) {

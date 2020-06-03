@@ -6,7 +6,7 @@ var config = {
 	user     : config.USER,
 	password : config.PWD,
         database : config.DATABASE,
-        connectionLimit: '5'
+        connectionLimit: '150'
 };
 
 var pool = mysql.createPool(config);
@@ -35,5 +35,12 @@ module.exports = {
 
     escape: (param) => {
         return pool.escape(param)
+    },
+    
+    status: () => {
+      console.log("passed in max size of the pool", pool.config.connectionLimit)
+      console.log("number of free connections awaiting use", pool._freeConnections.length) 
+      console.log("number of connections currently created, including ones in use", pool._allConnections.length)
+      console.log("number of connections in the process of being acquired", pool._acquiringConnections.length) 
     } 
 }
