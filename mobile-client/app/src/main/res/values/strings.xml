@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CollaborativeEducation</string>
+    <string name="app_name">Collaborative Education</string>
 
     <!-- Layouts -->
     <string name="title_add_category">Category name</string>
@@ -26,6 +26,13 @@
     <string name="text_anon_login">Continue without auth</string>
     <string name="text_save">Save</string>
     <string name="text_cancel">Cancel</string>
+    <string name="text_ok">OK</string>
+
+    <string name="dialog_title_give_before_take">Give before take</string>
+    <string name="dialog_content_give_before_take">Community lives by creating and curating courses.\nWe encourage new and current members to share their knowledge by creating new or contributing
+        to existing course.\nIf you can do some valuable work, solve valuable tasks, please share
+        courses which allows them to obtain skills to do this work, to solve this tasks.
+    </string>
 
     <!-- App consts -->
     <string name="click_comments_placeholder">Comments click. Upcoming feature</string>
