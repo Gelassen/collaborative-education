@@ -2,15 +2,14 @@ package ru.home.collaborativeeducation.ui.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.afollestad.materialdialogs.DialogCallback
+import com.afollestad.materialdialogs.MaterialDialog
 import kotlinx.android.synthetic.main.main_fragment.*
-import ru.home.collaborativeeducation.App
 import ru.home.collaborativeeducation.AppApplication
 import ru.home.collaborativeeducation.R
 import ru.home.collaborativeeducation.model.CategoryViewItem
@@ -20,7 +19,8 @@ import ru.home.collaborativeeducation.ui.base.BaseListFragment
 import ru.home.collaborativeeducation.ui.base.SearchTextWatcher
 import ru.home.collaborativeeducation.ui.course.CourseFragment
 
-class CategoryFragment : BaseListFragment<MainViewModel, MainAdapter>(), MainAdapter.ClickListener {
+class CategoryFragment : BaseListFragment<MainViewModel, MainAdapter>(), MainAdapter.ClickListener,
+    DialogCallback {
 
     val REQUEST_CODE = 1000
 
@@ -36,6 +36,8 @@ class CategoryFragment : BaseListFragment<MainViewModel, MainAdapter>(), MainAda
 
     override val getLayoutRes: Int
         get() = R.layout.main_fragment
+
+    lateinit var dialog: MaterialDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +62,13 @@ class CategoryFragment : BaseListFragment<MainViewModel, MainAdapter>(), MainAda
             (list.adapter as MainAdapter).update(datasource)
         })
         viewModel.onStart()
+
+        dialog = MaterialDialog(context!!)
+            .title(R.string.dialog_title_give_before_take)
+            .message(R.string.dialog_content_give_before_take)
+            .positiveButton(R.string.text_ok, null, this)
+
+        dialog.show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -71,8 +80,9 @@ class CategoryFragment : BaseListFragment<MainViewModel, MainAdapter>(), MainAda
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         viewModel.onStop()
+        dialog.dismiss()
+        super.onDestroy()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -93,6 +103,12 @@ class CategoryFragment : BaseListFragment<MainViewModel, MainAdapter>(), MainAda
             .replace(R.id.container, CourseFragment.newInstance(item))
             .addToBackStack(CourseFragment.TAG)
             .commit()
+    }
+
+    override fun invoke(p1: MaterialDialog) {
+        if (!dialog.isShowing) return
+
+        dialog.dismiss()
     }
 
 }
