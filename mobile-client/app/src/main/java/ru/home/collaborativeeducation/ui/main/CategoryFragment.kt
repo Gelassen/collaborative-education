@@ -37,7 +37,7 @@ class CategoryFragment : BaseListFragment<MainViewModel, MainAdapter>(), MainAda
     override val getLayoutRes: Int
         get() = R.layout.main_fragment
 
-    lateinit var dialog: MaterialDialog
+    var dialog: MaterialDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,13 +62,6 @@ class CategoryFragment : BaseListFragment<MainViewModel, MainAdapter>(), MainAda
             (list.adapter as MainAdapter).update(datasource)
         })
         viewModel.onStart()
-
-        dialog = MaterialDialog(context!!)
-            .title(R.string.dialog_title_give_before_take)
-            .message(R.string.dialog_content_give_before_take)
-            .positiveButton(R.string.text_ok, null, this)
-
-        dialog.show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -81,7 +74,9 @@ class CategoryFragment : BaseListFragment<MainViewModel, MainAdapter>(), MainAda
 
     override fun onDestroy() {
         viewModel.onStop()
-        dialog.dismiss()
+        if (dialog != null && dialog!!.isShowing) {
+            dialog!!.dismiss()
+        }
         super.onDestroy()
     }
 
@@ -106,9 +101,18 @@ class CategoryFragment : BaseListFragment<MainViewModel, MainAdapter>(), MainAda
     }
 
     override fun invoke(p1: MaterialDialog) {
-        if (!dialog.isShowing) return
+        if (!dialog!!.isShowing) return
 
-        dialog.dismiss()
+        viewModel.confirmReminderShowUp()
+        dialog!!.dismiss()
     }
 
+    override fun onShowReminder() {
+        dialog = MaterialDialog(context!!)
+            .title(R.string.dialog_title_give_before_take)
+            .message(R.string.dialog_content_give_before_take)
+            .positiveButton(R.string.text_ok, null, this)
+
+        dialog!!.show()
+    }
 }

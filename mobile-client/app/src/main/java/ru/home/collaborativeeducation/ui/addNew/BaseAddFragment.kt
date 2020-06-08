@@ -89,4 +89,8 @@ abstract class BaseAddFragment : Fragment(), IModelListener {
             Toast.makeText(context, "Something went wrong on backend. Please verify input data or try later", Toast.LENGTH_SHORT).show()
         }
     }
+
+    override fun onShowReminder() {
+        // no op
+    }
 }

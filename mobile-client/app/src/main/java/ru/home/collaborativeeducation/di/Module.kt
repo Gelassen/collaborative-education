@@ -5,6 +5,7 @@ import dagger.Provides
 import ru.home.collaborativeeducation.network.Api
 import ru.home.collaborativeeducation.network.NetworkRepository
 import ru.home.collaborativeeducation.repository.InternalStorageRepository
+import ru.home.collaborativeeducation.storage.Cache
 import javax.inject.Singleton
 
 @dagger.Module(includes = [NetworkModule::class])
@@ -20,5 +21,11 @@ class Module(val context: Context) {
     @Provides
     fun providesInternalStorageRepository(): InternalStorageRepository {
         return InternalStorageRepository(context)
+    }
+
+    @Singleton
+    @Provides
+    fun providesCache(): Cache {
+        return Cache(context)
     }
 }

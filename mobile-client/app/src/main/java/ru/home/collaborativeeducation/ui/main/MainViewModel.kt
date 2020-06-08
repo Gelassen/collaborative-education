@@ -11,8 +11,12 @@ import ru.home.collaborativeeducation.AppApplication
 import ru.home.collaborativeeducation.model.CategoryViewItem
 import ru.home.collaborativeeducation.network.NetworkRepository
 import ru.home.collaborativeeducation.repository.InternalStorageRepository
+import ru.home.collaborativeeducation.storage.Cache
 import ru.home.collaborativeeducation.ui.IModelListener
 import javax.inject.Inject
+import kotlin.collections.ArrayList
+
+const val THIRTY_DAYS : Long = 2592000
 
 class MainViewModel: ViewModel() {
 
@@ -21,6 +25,9 @@ class MainViewModel: ViewModel() {
 
     @Inject
     lateinit var repo: InternalStorageRepository
+
+    @Inject
+    lateinit var cache: Cache
 
     private val disposables: CompositeDisposable = CompositeDisposable()
 
@@ -38,6 +45,8 @@ class MainViewModel: ViewModel() {
     }
 
     fun onStart() {
+        checkReminder()
+
         disposables.add(
             service.getCategoryViewItems()
                 .doOnError { it ->
@@ -67,8 +76,24 @@ class MainViewModel: ViewModel() {
         )
     }
 
+    fun confirmReminderShowUp() {
+        cache.saveTimeReminder()
+    }
+
     fun onStop() {
         disposables.clear()
+    }
+
+    private fun checkReminder() {
+        if (listener == null) return
+
+        val lastView = cache.getTimeReminder()
+        val currentTime  = System.currentTimeMillis()
+        val period = (currentTime - lastView) / 1000
+        Log.d(App.TAG, String.format("LastView %s, CurrentTime %s, Period %s ", lastView, currentTime, period))
+        if (period > THIRTY_DAYS) {
+            listener!!.onShowReminder()
+        }
     }
 
 }

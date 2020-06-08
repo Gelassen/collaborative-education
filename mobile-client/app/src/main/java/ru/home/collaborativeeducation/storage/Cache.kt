@@ -11,6 +11,7 @@ class Cache(context: Context) {
 
     companion object {
         val KEY_UUID: String = "KEY_UUID"
+        val KEY_REMINDER = "KEY_REMINDER"
     }
 
     init {
@@ -25,5 +26,15 @@ class Cache(context: Context) {
 
     fun getUuid(): String {
         return pref.getString(KEY_UUID, "")!!
+    }
+
+    fun saveTimeReminder() {
+        return pref.edit()
+            .putLong(KEY_REMINDER, System.currentTimeMillis())
+            .apply()
+    }
+
+    fun getTimeReminder(): Long {
+        return pref.getLong(KEY_REMINDER, 0);
     }
 }

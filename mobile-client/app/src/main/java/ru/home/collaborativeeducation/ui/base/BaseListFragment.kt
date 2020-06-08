@@ -47,4 +47,7 @@ abstract class BaseListFragment<M : ViewModel, A : RecyclerView.Adapter<*>>: Fra
         }
     }
 
+    override fun onShowReminder() {
+        // no op
+    }
 }
