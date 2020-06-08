@@ -3,5 +3,5 @@
     tools:ignore="MissingTranslation">
     <integer name="com_vk_sdk_AppId">7415445</integer>
     <string name="splunk_key">29b27c81</string>
-    <string name="url">http://84.201.133.46:3000/v1/</string>  <!-- dynamic : http://192.168.1.5:3000/v1/ || 192.168.1.5 84.201.133.46-->
+    <string name="url">http://192.168.1.9:3000/v1/</string>  <!-- dynamic : http://192.168.1.5:3000/v1/ || http://84.201.133.46-->
 </resources>

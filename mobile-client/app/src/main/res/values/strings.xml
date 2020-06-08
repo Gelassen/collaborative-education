@@ -40,5 +40,6 @@
     <string name="click_open_source_no_activity">There is no activity to handle/show this url</string>
     <string name="error_server_side">Something went wrong on backend. Please try later</string>
     <string name="error_vk_login">Failed to login into VK</string>
+    <string name="error_not_valid_category_input">Not correct value. This field should not be empty.</string>
 
 </resources>

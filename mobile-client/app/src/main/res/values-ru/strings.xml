@@ -26,6 +26,7 @@
     <string name="click_open_source_no_activity">Здесь нет приложения обработать этот url</string>
     <string name="error_server_side">Что-то пошло не так на сервере. Попробуёте позже.</string>
     <string name="error_vk_login">Проблема со входом через VK. Продолжите без регистрации.</string>
+    <string name="error_not_valid_category_input">Некорректное значение. Это поле не должно быть пустым.</string>
 
     <string name="hint_search">Нажмите для поиска</string>
     <string name="text_vk_login">Вход через Вконтакте</string>

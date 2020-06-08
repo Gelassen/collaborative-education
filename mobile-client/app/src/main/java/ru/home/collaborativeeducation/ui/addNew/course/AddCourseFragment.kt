@@ -2,6 +2,7 @@ package ru.home.collaborativeeducation.ui.addNew.course
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import kotlinx.android.synthetic.main.add_new_item_fragment.*
 import kotlinx.android.synthetic.main.add_new_item_fragment.categoryNameInput
 import ru.home.collaborativeeducation.R
@@ -35,12 +36,16 @@ class AddCourseFragment : BaseAddFragment() {
     }
 
     override fun onSave() {
-        selectedItem = CourseViewItem(
-            0,
-            categoryNameInput.text.toString(),
-            arguments!!.getParcelable<CategoryViewItem>(PAYLOAD)!!.uid!!,
-            Cache(context!!).getUuid())
+        if (categoryNameInput.text.toString().isEmpty()) {
+            Toast.makeText(context, R.string.error_not_valid_category_input, Toast.LENGTH_SHORT).show()
+        } else {
+            selectedItem = CourseViewItem(
+                0,
+                categoryNameInput.text.toString(),
+                arguments!!.getParcelable<CategoryViewItem>(PAYLOAD)!!.uid!!,
+                Cache(context!!).getUuid())
 
-        viewModel.onSaveCourse(selectedItem as CourseViewItem)
+            viewModel.onSaveCourse(selectedItem as CourseViewItem)
+        }
     }
 }
