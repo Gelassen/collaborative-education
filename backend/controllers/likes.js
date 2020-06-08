@@ -16,16 +16,18 @@ exports.specific = async function(req, res) {
 
 exports.create = async function(req, res) {
     var result;
-    var likes = req.body.metadata.likes
-    console.log("Likes uid: " + likes.likesUid)
+    result = await model.getSpecific(req)
+        .then(function(response) {
+            response = JSON.parse(response)
+            if (response.status.payload.length == 0) {
+                console.log("likes create")
+                return model.create(req)
+            } else {
+                console.log("likes update")
+                return model.update(req)
+            }
+        }) 
 
-    if (likes.likesUid === 'undefined' 
-        || likes.likesUid == null
-        || likes.likesUid == -1) {
-        result = await model.create(req)
-    } else {
-        result = await model.update(req)
-    }
     res.send(result)
     res.end()    
 }
