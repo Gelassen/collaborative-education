@@ -9,6 +9,7 @@ var tasks = require('./controllers/category')
 var courses = require('./controllers/course')
 var sources = require('./controllers/course-source')
 var likes = require('./controllers/likes')
+var offers = require('./controllers/offers')
 
 const hostname = config.WEBSERVICE_HOST;
 const port = config.WEBSERVICE_PORT;
@@ -90,6 +91,16 @@ app.get('/v1/category/:id/course/:courseId/source/:sourceId/like', function(req,
 app.post('/v1/like/create', function(req, res, next) {
     console.log("hit /v1/like/create")
     likes.create(req, res)
+})
+
+app.get('/v1/offers', function(req, res, next) {
+    pool.status()
+    offers.all(req, res)
+})
+
+app.post('/v1/offers', function(req, res, next) {
+    pool.status()
+    offers.create(req, res)
 })
 
 // The error handler must be before any other error middleware and after all controllers

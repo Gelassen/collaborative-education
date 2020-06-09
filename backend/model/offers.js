@@ -19,6 +19,26 @@ exports.getAll = function(req, res) {
     })
 }
 
+exports.getSpecific = function(req, res) {
+    return new Promise((resolve) => {
+        var proposal = req.body.metadata.proposal
+        pool.getConnection(function(err, connection) {
+            connection.query(
+                { sql: 'SELECT * FROM proposals WHERE uid = ?;', timeout: 60000 },
+                [proposal.uid],
+                function(error, rows, fields) {
+                    if (error != null) {
+                        resolve(JSON.stringify(util.getErrorMessage()))
+                    } else {
+                        resolve(JSON.stringify(util.getPayloadMessage(rows)))
+                    }
+                    connection.release()
+                }
+            )
+        })
+    })
+}
+
 exports.create = function(req) {
     return new Promise( (resolve) => {
         var proposal = req.body.metadata.proposal
