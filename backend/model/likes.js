@@ -21,10 +21,12 @@ exports.getAll = function(req, res) {
 exports.getSpecific = function(req) {
     return new Promise((resolve) => {
         pool.getConnection(function(err, connection) {
-            console.log("req.params.id: " + pool.escape(req.params.id))
+            var body = req.body
+            var likes = body.metadata.likes
+            console.log("[req body] " + JSON.stringify(body))
             connection.query(
                 { sql: 'SELECT * FROM likes WHERE course_uid = ?;', timeout: 60000 }, 
-                [req.params.id], 
+                [likes.courseUid], 
                 function(error, rows, fields) {
                     if (error != null) {
                         resolve(JSON.stringify(util.getErrorMessage()))

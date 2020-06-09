@@ -3,8 +3,8 @@ let config = {
   WEBSERVICE_PORT:  3000,
   DATABASE_HOST: '127.0.0.1',
   DATABASE_PORT: 3306,
-  USER: 'gelassen', 
-  PWD: 'password',
+  USER: 'root', 
+  PWD: 'root',
   DATABASE: 'db_collaborative_edu'
 }
 
