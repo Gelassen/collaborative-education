@@ -19,13 +19,19 @@ exports.create = async function(req, res) {
     var likes = req.body.metadata.likes
     console.log("Likes uid: " + likes.likesUid)
 
-    if (likes.likesUid === 'undefined' 
-        || likes.likesUid == null
-        || likes.likesUid == -1) {
-        result = await model.create(req)
-    } else {
-        result = await model.update(req)
-    }
+    var result = await model.getSpecific(req)
+        .then(function(response) {
+            console.log('Response: ' + response)
+            var response = JSON.parse(response)
+            if (response.status.payload.length == 0) {
+                console.log("Likes create")
+                return model.create(req)
+            } else {
+                console.log("Lieks update")
+                return model.update(req)
+            }
+        })
+
     res.send(result)
     res.end()    
 }
