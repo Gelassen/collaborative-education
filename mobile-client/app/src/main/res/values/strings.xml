@@ -33,6 +33,16 @@
         to existing course.\nIf you can do some valuable work, solve valuable tasks, please share
         courses which allows them to obtain skills to do this work, to solve this tasks.
     </string>
+    <string name="dialog_title_work_is_suspended">Work is suspended</string>
+    <string name="dialog_content_work_is_suspended">Work on the project is suspended and server is shutdown.
+        \n\nAfter gathering first feedback product roadmap had been reviewed and shift to integration with
+        existing communities built around Q&amp;A on different topics such as Яндекс.Кью and stackexchange.
+        First stage of negotiation didn\'t bring necessary results, next ideas were put in backlog and
+        focus moved to another product.
+        \n\nIf you want to be informed after release of the next version, please send an email on dmitrii.kazakov@gmail.com
+        with topic Collaborative Education.
+        \n\nThank you for your interest!
+    </string>
 
     <!-- App consts -->
     <string name="click_comments_placeholder">Comments click. Upcoming feature</string>

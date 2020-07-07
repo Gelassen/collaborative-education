@@ -1,3 +1,17 @@
+Проблема:
+ - подбор сильных и актуальных курсов для овладения теми или иными навыками 
+ 
+Перед кем стоит схожая проблема:
+ - поступающие/обучаючиеся в высшых учбеных заведениях
+ - преподаватели, авторы тренингов и курсов 
+ 
+Интервью:
+1. Пошаговый сценарий, как сейчас решается эта задача 
+2. На что вы реагируется при принятии решений в этом сценарии? Где вам нужно принимать решение и что является причиной постановки вопроса?
+3. Какие проблемы стоят перед вами?
+4. Цели, мотивации, причины 
+
+
 Category: 
  - high level node 
  - build short and descriptive 
@@ -10,9 +24,9 @@ Category:
  as a Member of community I increase the rate of the data source 
  
  Implementation: 
-  - author's course source and alternative source are presented on the same page, distinguished by label ('author', 'alternative'), sorted by rate (mitigate risks) 
-  - course's source has comments sorted by rate as well, the aim of the comment is to provide additional information  (Does app really need it?)
-  - mechanics of feedback [a] to community [b] to author [c] to developer or open source community (promised and achieved, new ideas, how did it help community member, broken sources)
+  - [done] author's course source and alternative source are presented on the same page, distinguished by label ('author', 'alternative'), sorted by rate (mitigate risks) 
+  - [moved to github] course's source has comments sorted by rate as well, the aim of the comment is to provide additional information  (Does app really need it?)
+  - [moved to github] mechanics of feedback [a] to community [b] to author [c] to developer or open source community (promised and achieved, new ideas, how did it help community member, broken sources)
  
   - unique identifier is hardware number, keeping it for user's operation sign  
   - separate operation's sign and the rest of data (for the first stage)
@@ -21,7 +35,7 @@ Category:
   - [migrate on Koin]
   - [confirm atomic / transactional change on rate to keep data integrity]
   - [sort by rate]
-  - [pagination for big data sets]
+  - [moved to github] [pagination for big data sets]
   
   - account collab.edu.russia@gmail.com
  

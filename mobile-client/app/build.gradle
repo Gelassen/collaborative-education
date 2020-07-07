@@ -15,8 +15,8 @@ android {
         applicationId "ru.home.collaborativeeducation"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 2
-        versionName "0.91"
+        versionCode 4
+        versionName "0.93"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true

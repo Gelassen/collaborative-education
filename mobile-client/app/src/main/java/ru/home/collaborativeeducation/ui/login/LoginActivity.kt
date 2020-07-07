@@ -3,6 +3,8 @@ package ru.home.collaborativeeducation.ui.login
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import com.afollestad.materialdialogs.DialogCallback
+import com.afollestad.materialdialogs.MaterialDialog
 import com.vk.api.sdk.VK
 import com.vk.api.sdk.auth.VKAccessToken
 import com.vk.api.sdk.auth.VKAuthCallback
@@ -12,7 +14,9 @@ import ru.home.collaborativeeducation.ui.MainActivity
 import ru.home.collaborativeeducation.R
 import ru.home.collaborativeeducation.ui.base.BaseActivity
 
-class LoginActivity : BaseActivity() {
+class LoginActivity : BaseActivity(), DialogCallback {
+
+    lateinit var dialog: MaterialDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +35,15 @@ class LoginActivity : BaseActivity() {
             startActivity(intent)
             finish()
         }
+
+        // TODO remove when work on project becomes active
+        dialog = MaterialDialog(this)
+            .cancelable(false)
+            .title(R.string.dialog_title_work_is_suspended)
+            .message(R.string.dialog_content_work_is_suspended)
+            .positiveButton(R.string.text_ok, null, this)
+
+        dialog.show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -48,5 +61,17 @@ class LoginActivity : BaseActivity() {
         if (data == null || !VK.onActivityResult(requestCode, resultCode, data, callback)) {
             super.onActivityResult(requestCode, resultCode, data)
         }
+    }
+
+    override fun onDestroy() {
+        dialog.dismiss()
+        super.onDestroy()
+    }
+
+    override fun invoke(p1: MaterialDialog) {
+        if (!dialog.isShowing) return
+
+        dialog.dismiss()
+        finish()
     }
 }
