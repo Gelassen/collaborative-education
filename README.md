@@ -1,9 +1,9 @@
 # Collaborative Education
-MVP that implement the idea of collaborative education. <br><br>
+MVP that implement the idea of collaborative education. 
 
-Nowadays there is exponential growth of information around us and constant pressure to learn new things. How to filter what is a valuable and what is not? <br><br>
+Nowadays there is exponential growth of information around us and constant pressure to learn new things. How to filter what is a valuable and what is not? 
 
-Recommendations. Let's people with the same needs and goals filtrate what works and does not. The same as google search engine counts references on the content before show it to you on search result page, we will count votes for educational course. <br><br>
+Recommendations. Let's people with the same needs and goals filtrate what works and does not. The same as google search engine counts references on the content before show it to you on search result page, we will count votes for educational course. 
 
 <a href="https://gelassen.github.io/blog/2020/06/06/mvp-on-collaborative-edu.html">Released a MVP that implement the idea of collaborative education.</a> <br>
 <a href="https://gelassen.github.io/blog/2020/06/13/insights-from-mvp.html">Insights on 1st MVP after Product Manager interview.</a> <br><br>
